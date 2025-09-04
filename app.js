@@ -3,13 +3,17 @@ const buttons = document.querySelectorAll("#in-btn button");
 
 let currentInput = "";
 
+function isOperator(char) {
+  return ["+", "-", "*", "/"].includes(char);
+}
+
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     const btnValue = button.textContent;
 
     if (btnValue === "=") {
       try {
-        currentInput = eval(currentInput);
+        currentInput = Function("return " + currentInput)().toString();
       } catch (error) {
         currentInput = "Error";
       }
@@ -24,6 +28,15 @@ buttons.forEach((button) => {
       display.value = currentInput;
     } 
     else {
+      // Prevent multiple operators in a row
+      if (isOperator(btnValue) && isOperator(currentInput.slice(-1))) {
+        return;
+      }
+      // Prevent multiple decimals in one number
+      if (btnValue === "." && /\.\d*$/.test(currentInput)) {
+        return;
+      }
+
       currentInput += btnValue;
       display.value = currentInput;
     }
