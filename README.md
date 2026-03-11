@@ -1,0 +1,3 @@
+# CountUp – Modern Calculator
+
+CountUp is a modern calculator application built using HTML, CSS & JavaScript that performs basic arithmetic operations such as addition, subtraction, multiplication, and division. The application is designed with a clean and user-friendly interface to provide a smooth calculation experience.The project focuses on implementing core calculator logic, handling user input, and updating results in real time using React state management. A component-based structure is used to keep the code organized and maintainable.This project helped strengthen my understanding of React components, state handling, event management, and basic application logic.
