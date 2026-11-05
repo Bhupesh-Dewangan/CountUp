@@ -130,3 +130,50 @@ buttons.forEach((button) => {
     handleInput(button.textContent.trim());
   });
 });
+
+function highlightButton(button) {
+  if (!button) return;
+  button.classList.add("pressed");
+  setTimeout(() => {
+    button.classList.remove("pressed");
+  }, 120);
+}
+
+function findButtonForKey(key) {
+  if (key === "Enter" || key === "=") {
+    return document.querySelector("#equal");
+  }
+  if (key === "Backspace") {
+    return Array.from(buttons).find((b) => b.textContent.trim() === "Del");
+  }
+  if (key === "Escape" || key === "Delete") {
+    return document.querySelector("#reset");
+  }
+  return Array.from(buttons).find((b) => b.textContent.trim() === key);
+}
+
+window.addEventListener("keydown", (event) => {
+  const { key } = event;
+
+  if (
+    /^[0-9]$/.test(key) ||
+    isOperator(key) ||
+    key === "." ||
+    key === "=" ||
+    key === "Enter" ||
+    key === "Backspace" ||
+    key === "Escape" ||
+    key === "Delete"
+  ) {
+    event.preventDefault();
+
+    let inputVal = key;
+    if (key === "Enter") inputVal = "=";
+    else if (key === "Backspace") inputVal = "Del";
+    else if (key === "Escape" || key === "Delete") inputVal = "Reset";
+
+    const btn = findButtonForKey(key);
+    highlightButton(btn);
+    handleInput(inputVal);
+  }
+});

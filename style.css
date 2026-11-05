@@ -73,8 +73,10 @@ button:hover {
   background: #d5d5d5;
 }
 
-button:active {
+button:active,
+button.pressed {
   transform: scale(0.95);
+  filter: brightness(0.9);
 }
 
 .operator {
