@@ -353,6 +353,7 @@ function switchMode(modeName) {
   if (box) {
     box.classList.toggle("scientific-mode", modeName === "scientific");
     box.classList.toggle("programmer-mode", modeName === "programmer");
+    box.classList.toggle("financial-mode", modeName === "financial");
   }
 
   localStorage.setItem("countup_mode", modeName);
@@ -979,3 +980,202 @@ if (progButtons) {
 }
 
 updateKeyStatesForBase("DEC");
+
+// Financial Calculator Engine
+const finTabBtns = document.querySelectorAll(".fin-tab-btn");
+const finSubPanels = document.querySelectorAll(".fin-subtab-panel");
+
+function switchFinTab(tabKey) {
+  finTabBtns.forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.subtab === tabKey);
+  });
+  finSubPanels.forEach((panel) => {
+    panel.classList.toggle("active-subtab", panel.id === `fin-subtab-${tabKey}`);
+  });
+}
+
+if (finTabBtns) {
+  finTabBtns.forEach((btn) => {
+    btn.addEventListener("click", () => switchFinTab(btn.dataset.subtab));
+  });
+}
+
+function formatCurrency(val) {
+  if (isNaN(val) || !isFinite(val)) return "$0.00";
+  return (
+    "$" +
+    Number(val).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+  );
+}
+
+// 1. EMI Calculation
+const emiPrincipalInput = document.querySelector("#emi-principal");
+const emiRateInput = document.querySelector("#emi-rate");
+const emiTenureInput = document.querySelector("#emi-tenure");
+const emiCalcBtn = document.querySelector("#emi-calc-btn");
+const emiMonthlyEl = document.querySelector("#emi-res-monthly");
+const emiPrincipalEl = document.querySelector("#emi-res-principal");
+const emiInterestEl = document.querySelector("#emi-res-interest");
+const emiTotalEl = document.querySelector("#emi-res-total");
+
+function calculateEMI() {
+  const P = parseFloat(emiPrincipalInput?.value) || 0;
+  const annualRate = parseFloat(emiRateInput?.value) || 0;
+  const years = parseFloat(emiTenureInput?.value) || 0;
+
+  if (P <= 0 || years <= 0) {
+    if (emiMonthlyEl) emiMonthlyEl.textContent = "$0.00";
+    if (emiPrincipalEl) emiPrincipalEl.textContent = formatCurrency(P);
+    if (emiInterestEl) emiInterestEl.textContent = "$0.00";
+    if (emiTotalEl) emiTotalEl.textContent = formatCurrency(P);
+    return;
+  }
+
+  const n = years * 12;
+  let emi = 0;
+  let total = 0;
+  let interest = 0;
+
+  if (annualRate === 0) {
+    emi = P / n;
+    total = P;
+    interest = 0;
+  } else {
+    const r = annualRate / 12 / 100;
+    emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    total = emi * n;
+    interest = total - P;
+  }
+
+  if (emiMonthlyEl) emiMonthlyEl.textContent = formatCurrency(emi);
+  if (emiPrincipalEl) emiPrincipalEl.textContent = formatCurrency(P);
+  if (emiInterestEl) emiInterestEl.textContent = formatCurrency(interest);
+  if (emiTotalEl) emiTotalEl.textContent = formatCurrency(total);
+}
+
+if (emiCalcBtn) emiCalcBtn.addEventListener("click", calculateEMI);
+[emiPrincipalInput, emiRateInput, emiTenureInput].forEach((input) => {
+  input?.addEventListener("input", calculateEMI);
+});
+
+// 2. SIP Calculation
+const sipMonthlyInput = document.querySelector("#sip-monthly");
+const sipRateInput = document.querySelector("#sip-rate");
+const sipYearsInput = document.querySelector("#sip-years");
+const sipCalcBtn = document.querySelector("#sip-calc-btn");
+const sipMaturityEl = document.querySelector("#sip-res-maturity");
+const sipInvestedEl = document.querySelector("#sip-res-invested");
+const sipReturnsEl = document.querySelector("#sip-res-returns");
+
+function calculateSIP() {
+  const monthly = parseFloat(sipMonthlyInput?.value) || 0;
+  const annualReturn = parseFloat(sipRateInput?.value) || 0;
+  const years = parseFloat(sipYearsInput?.value) || 0;
+
+  if (monthly <= 0 || years <= 0) {
+    if (sipMaturityEl) sipMaturityEl.textContent = "$0.00";
+    if (sipInvestedEl) sipInvestedEl.textContent = "$0.00";
+    if (sipReturnsEl) sipReturnsEl.textContent = "$0.00";
+    return;
+  }
+
+  const n = years * 12;
+  const invested = monthly * n;
+  let maturity = invested;
+
+  if (annualReturn > 0) {
+    const i = annualReturn / 12 / 100;
+    maturity = monthly * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+  }
+
+  const returns = maturity - invested;
+
+  if (sipMaturityEl) sipMaturityEl.textContent = formatCurrency(maturity);
+  if (sipInvestedEl) sipInvestedEl.textContent = formatCurrency(invested);
+  if (sipReturnsEl) sipReturnsEl.textContent = formatCurrency(returns);
+}
+
+if (sipCalcBtn) sipCalcBtn.addEventListener("click", calculateSIP);
+[sipMonthlyInput, sipRateInput, sipYearsInput].forEach((input) => {
+  input?.addEventListener("input", calculateSIP);
+});
+
+// 3. GST Calculation
+const gstAmountInput = document.querySelector("#gst-amount");
+const gstCustomRateInput = document.querySelector("#gst-custom-rate");
+const gstSlabBtns = document.querySelectorAll(".gst-slab-btn");
+const gstModeAddBtn = document.querySelector("#gst-mode-add");
+const gstModeRemoveBtn = document.querySelector("#gst-mode-remove");
+const gstNetEl = document.querySelector("#gst-res-net");
+const gstTaxEl = document.querySelector("#gst-res-tax");
+const gstTotalEl = document.querySelector("#gst-res-total");
+
+let gstMode = "add";
+
+function calculateGST() {
+  const amount = parseFloat(gstAmountInput?.value) || 0;
+  const rate = parseFloat(gstCustomRateInput?.value) || 0;
+
+  let net = 0;
+  let tax = 0;
+  let total = 0;
+
+  if (amount <= 0 || rate <= 0) {
+    net = amount;
+    tax = 0;
+    total = amount;
+  } else if (gstMode === "add") {
+    tax = (amount * rate) / 100;
+    total = amount + tax;
+    net = amount;
+  } else {
+    net = amount / (1 + rate / 100);
+    tax = amount - net;
+    total = amount;
+  }
+
+  if (gstNetEl) gstNetEl.textContent = formatCurrency(net);
+  if (gstTaxEl) gstTaxEl.textContent = formatCurrency(tax);
+  if (gstTotalEl) gstTotalEl.textContent = formatCurrency(total);
+}
+
+gstSlabBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    gstSlabBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    if (gstCustomRateInput) gstCustomRateInput.value = btn.dataset.rate;
+    calculateGST();
+  });
+});
+
+if (gstCustomRateInput) {
+  gstCustomRateInput.addEventListener("input", () => {
+    gstSlabBtns.forEach((b) => {
+      b.classList.toggle("active", b.dataset.rate === gstCustomRateInput.value);
+    });
+    calculateGST();
+  });
+}
+
+if (gstModeAddBtn) {
+  gstModeAddBtn.addEventListener("click", () => {
+    gstMode = "add";
+    gstModeAddBtn.classList.add("active");
+    gstModeRemoveBtn.classList.remove("active");
+    calculateGST();
+  });
+}
+
+if (gstModeRemoveBtn) {
+  gstModeRemoveBtn.addEventListener("click", () => {
+    gstMode = "remove";
+    gstModeRemoveBtn.classList.add("active");
+    gstModeAddBtn.classList.remove("active");
+    calculateGST();
+  });
+}
+
+if (gstAmountInput) gstAmountInput.addEventListener("input", calculateGST);
