@@ -349,6 +349,11 @@ function switchMode(modeName) {
     targetView.classList.add("active-view");
   }
 
+  const box = document.querySelector("#box");
+  if (box) {
+    box.classList.toggle("scientific-mode", modeName === "scientific");
+  }
+
   localStorage.setItem("countup_mode", modeName);
   closeDrawer();
 }
@@ -362,3 +367,265 @@ modeItems.forEach((btn) => {
 // Restore saved mode or default to standard
 const savedMode = localStorage.getItem("countup_mode") || "standard";
 switchMode(savedMode);
+
+// Scientific Calculator Engine
+const sciDisplay = document.querySelector("#sci-show");
+const sciSubDisplay = document.querySelector("#sci-sub-display");
+const sciAngleModeBtn = document.querySelector("#sci-angle-mode");
+const sciButtons = document.querySelectorAll("#sci-btn button");
+
+let sciCurrentInput = "";
+let sciIsEvaluated = false;
+let sciLastAns = "0";
+let sciAngleMode = localStorage.getItem("countup_angle_mode") || "DEG";
+
+if (sciAngleModeBtn) {
+  sciAngleModeBtn.textContent = sciAngleMode;
+  sciAngleModeBtn.addEventListener("click", () => {
+    sciAngleMode = sciAngleMode === "DEG" ? "RAD" : "DEG";
+    sciAngleModeBtn.textContent = sciAngleMode;
+    localStorage.setItem("countup_angle_mode", sciAngleMode);
+  });
+}
+
+function calculateFactorial(n) {
+  if (n < 0 || !Number.isInteger(n)) return NaN;
+  if (n > 170) return Infinity;
+  let res = 1;
+  for (let i = 2; i <= n; i++) res *= i;
+  return res;
+}
+
+function autoCloseParens(expr) {
+  const openCount = (expr.match(/\(/g) || []).length;
+  const closeCount = (expr.match(/\)/g) || []).length;
+  let closed = expr;
+  for (let i = 0; i < openCount - closeCount; i++) {
+    closed += ")";
+  }
+  return closed;
+}
+
+function evaluateSciExpression(expression, angleMode) {
+  let s = autoCloseParens(expression.trim());
+  if (!s) return "";
+
+  // Replace factorial: e.g. 5!
+  s = s.replace(/(\d+(\.\d+)?)!/g, (_, n) => calculateFactorial(parseFloat(n)));
+
+  // Replace constants & operators
+  s = s.replace(/π/g, "(Math.PI)");
+  s = s.replace(/\be\b/g, "(Math.E)");
+  s = s.replace(/\^/g, "**");
+  s = s.replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-");
+
+  // Trigonometric & logarithmic replacements
+  if (angleMode === "DEG") {
+    s = s.replace(/sin\(([^)]+)\)/g, "Math.sin(($1) * Math.PI / 180)");
+    s = s.replace(/cos\(([^)]+)\)/g, "Math.cos(($1) * Math.PI / 180)");
+    s = s.replace(/tan\(([^)]+)\)/g, "Math.tan(($1) * Math.PI / 180)");
+  } else {
+    s = s.replace(/sin\(([^)]+)\)/g, "Math.sin($1)");
+    s = s.replace(/cos\(([^)]+)\)/g, "Math.cos($1)");
+    s = s.replace(/tan\(([^)]+)\)/g, "Math.tan($1)");
+  }
+
+  s = s.replace(/log\(([^)]+)\)/g, "Math.log10($1)");
+  s = s.replace(/ln\(([^)]+)\)/g, "Math.log($1)");
+  s = s.replace(/sqrt\(([^)]+)\)/g, "Math.sqrt($1)");
+
+  try {
+    const result = new Function(`return (${s})`)();
+    if (!Number.isFinite(result)) {
+      return "Cannot divide by zero";
+    }
+    return String(parseFloat(Number(result).toPrecision(12)));
+  } catch (err) {
+    return "Error";
+  }
+}
+
+function handleSciInput(btn) {
+  const action = btn.dataset.action;
+  const text = btn.textContent.trim();
+
+  if (btn.id === "sci-reset") {
+    sciCurrentInput = "";
+    sciIsEvaluated = false;
+    if (sciDisplay) sciDisplay.value = "";
+    if (sciSubDisplay) sciSubDisplay.textContent = "";
+    return;
+  }
+
+  if (btn.id === "sci-del") {
+    if (sciIsEvaluated || sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") {
+      sciCurrentInput = "";
+      sciIsEvaluated = false;
+      if (sciSubDisplay) sciSubDisplay.textContent = "";
+    } else {
+      const funcMatch = sciCurrentInput.match(/(sin\(|cos\(|tan\(|log\(|ln\(|sqrt\()$/);
+      if (funcMatch) {
+        sciCurrentInput = sciCurrentInput.slice(0, -funcMatch[0].length);
+      } else {
+        sciCurrentInput = sciCurrentInput.slice(0, -1);
+      }
+    }
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (btn.id === "sci-equal" || action === "=") {
+    if (!sciCurrentInput || sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") {
+      return;
+    }
+    const exprForSub = autoCloseParens(sciCurrentInput);
+    const result = evaluateSciExpression(sciCurrentInput, sciAngleMode);
+    if (sciSubDisplay) sciSubDisplay.textContent = `${exprForSub} =`;
+    sciCurrentInput = result;
+    if (result !== "Error" && result !== "Cannot divide by zero") {
+      sciLastAns = result;
+    }
+    sciIsEvaluated = true;
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "ans") {
+    if (sciIsEvaluated) {
+      sciCurrentInput = sciLastAns;
+      sciIsEvaluated = false;
+    } else {
+      sciCurrentInput += sciLastAns;
+    }
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "inv") {
+    if (sciCurrentInput && !sciIsEvaluated) {
+      sciCurrentInput = `1/(${sciCurrentInput})`;
+    } else {
+      sciCurrentInput = "1/(";
+    }
+    sciIsEvaluated = false;
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "sin" || action === "cos" || action === "tan" || action === "log" || action === "ln" || action === "sqrt") {
+    if (sciIsEvaluated || sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") {
+      sciCurrentInput = `${action}(`;
+      sciIsEvaluated = false;
+    } else {
+      sciCurrentInput += `${action}(`;
+    }
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "pi") {
+    if (sciIsEvaluated) {
+      sciCurrentInput = "π";
+      sciIsEvaluated = false;
+    } else {
+      sciCurrentInput += "π";
+    }
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "e") {
+    if (sciIsEvaluated) {
+      sciCurrentInput = "e";
+      sciIsEvaluated = false;
+    } else {
+      sciCurrentInput += "e";
+    }
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "fact") {
+    if (sciCurrentInput && !sciCurrentInput.endsWith("!")) {
+      sciCurrentInput += "!";
+      sciIsEvaluated = false;
+      if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    }
+    return;
+  }
+
+  if (action === "pow") {
+    if (sciCurrentInput && !/[\+\-\*\/\^]$/.test(sciCurrentInput)) {
+      sciCurrentInput += "^";
+      sciIsEvaluated = false;
+      if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    }
+    return;
+  }
+
+  if (action === "pm") {
+    const match = sciCurrentInput.match(/(.*[+\-*/(])?\s*(-?\d*\.?\d+)$/);
+    if (match) {
+      const prefix = match[1] || "";
+      const numStr = match[2];
+      const toggled = numStr.startsWith("-") ? numStr.slice(1) : `-${numStr}`;
+      sciCurrentInput = prefix + toggled;
+    } else if (!sciCurrentInput) {
+      sciCurrentInput = "-";
+    }
+    sciIsEvaluated = false;
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "%") {
+    const match = sciCurrentInput.match(/(.*[+\-*/(])?\s*(-?\d*\.?\d+)$/);
+    if (match) {
+      const prefix = match[1] || "";
+      const numStr = match[2];
+      const val = parseFloat(numStr) / 100;
+      const formatted = String(parseFloat(val.toPrecision(12)));
+      sciCurrentInput = prefix + formatted;
+      if (sciDisplay) sciDisplay.value = sciCurrentInput;
+      sciIsEvaluated = false;
+    }
+    return;
+  }
+
+  // Operator handling (+, -, *, /)
+  if (["+", "-", "*", "/"].includes(action)) {
+    if (sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") return;
+    if (!sciCurrentInput) {
+      if (action === "-") {
+        sciCurrentInput = "-";
+        if (sciDisplay) sciDisplay.value = sciCurrentInput;
+      }
+      return;
+    }
+    if (/[+\-*/]$/.test(sciCurrentInput)) {
+      sciCurrentInput = sciCurrentInput.slice(0, -1) + action;
+    } else {
+      sciCurrentInput += action;
+    }
+    sciIsEvaluated = false;
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  // Digits and parentheses
+  const val = action || text;
+  if (sciIsEvaluated || sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") {
+    sciCurrentInput = val === "." ? "0." : val;
+    sciIsEvaluated = false;
+  } else {
+    sciCurrentInput += val;
+  }
+  if (sciDisplay) sciDisplay.value = sciCurrentInput;
+}
+
+if (sciButtons) {
+  sciButtons.forEach((btn) => {
+    if (btn.id === "sci-angle-mode") return;
+    btn.addEventListener("click", () => handleSciInput(btn));
+  });
+}
