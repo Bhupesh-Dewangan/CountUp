@@ -190,3 +190,35 @@ window.addEventListener("keydown", (event) => {
     handleInput(inputVal);
   }
 });
+
+// Theme Toggle Functionality
+const themeToggleBtn = document.querySelector("#theme-toggle");
+const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector(".theme-icon") : null;
+
+function applyTheme(theme) {
+  if (theme === "dark") {
+    document.body.classList.add("dark-theme");
+    if (themeIcon) themeIcon.textContent = "☀️";
+    if (themeToggleBtn) themeToggleBtn.setAttribute("aria-label", "Switch to light theme");
+  } else {
+    document.body.classList.remove("dark-theme");
+    if (themeIcon) themeIcon.textContent = "🌙";
+    if (themeToggleBtn) themeToggleBtn.setAttribute("aria-label", "Switch to dark theme");
+  }
+}
+
+// Retrieve saved theme or system preference
+const savedTheme =
+  localStorage.getItem("countup_theme") ||
+  (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+applyTheme(savedTheme);
+
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener("click", () => {
+    const isDark = document.body.classList.contains("dark-theme");
+    const nextTheme = isDark ? "light" : "dark";
+    applyTheme(nextTheme);
+    localStorage.setItem("countup_theme", nextTheme);
+  });
+}

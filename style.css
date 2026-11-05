@@ -5,6 +5,48 @@
   box-sizing: border-box;
 }
 
+:root {
+  --bg-gradient: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  --box-bg: rgba(255, 255, 255, 0.85);
+  --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  --display-bg: #f0f0f0;
+  --display-text: #222222;
+  --sub-display-text: #777777;
+  --btn-bg: #e0e0e0;
+  --btn-hover: #d5d5d5;
+  --btn-text: #222222;
+  --operator-bg: #ff8c42;
+  --operator-hover: #ff7b24;
+  --operator-text: #ffffff;
+  --equal-bg: #28a745;
+  --equal-hover: #218838;
+  --equal-text: #ffffff;
+  --brand-color: #ff8c42;
+  --toggle-bg: #e6e6e6;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-theme {
+  --bg-gradient: linear-gradient(135deg, #181924, #0f1016);
+  --box-bg: rgba(30, 32, 45, 0.9);
+  --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --display-bg: #14151e;
+  --display-text: #f0f2f5;
+  --sub-display-text: #8e94a5;
+  --btn-bg: #282a3a;
+  --btn-hover: #35384d;
+  --btn-text: #f0f2f5;
+  --operator-bg: #ff8c42;
+  --operator-hover: #ff7b24;
+  --operator-text: #ffffff;
+  --equal-bg: #22c55e;
+  --equal-hover: #16a34a;
+  --equal-text: #ffffff;
+  --brand-color: #ff9d5c;
+  --toggle-bg: #282a3a;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
 html, body {
   height: 100%;
   width: 100%;
@@ -12,44 +54,78 @@ html, body {
 }
 
 body {
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  background: var(--bg-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.3s ease;
 }
 
 #box {
-  background: #ffffffcc;
+  background: var(--box-bg);
   border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--box-shadow);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20rem; /* You can adjust if needed */
+  width: 20rem;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+#header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
 }
 
 #brand {
   font-family: 'Pacifico', cursive;
   font-size: 2rem;
-  color: #ff8c42;
-  font-weight: normal; /* script fonts usually don’t use bold */
-  padding-bottom: 1.2rem;
+  color: var(--brand-color);
+  font-weight: normal;
+  transition: color 0.3s ease;
 }
 
+#theme-toggle {
+  background: var(--toggle-bg);
+  border: none;
+  border-radius: 50%;
+  width: 2.3rem;
+  height: 2.3rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--btn-text);
+  box-shadow: 0 2px 6px var(--shadow-color);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
 
+#theme-toggle:hover {
+  transform: rotate(15deg) scale(1.08);
+}
+
+#theme-toggle:active {
+  transform: scale(0.95);
+}
 
 #display-container {
   width: 100%;
   min-height: 4.5rem;
-  background-color: #f0f0f0;
+  background-color: var(--display-bg);
   border-radius: 12px;
   margin-bottom: 1.2rem;
   padding: 0.5rem 0.8rem;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 2px 5px var(--shadow-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: background 0.3s ease;
 }
 
 #sub-display {
@@ -57,10 +133,11 @@ body {
   min-height: 1.2rem;
   text-align: right;
   font-size: 0.9rem;
-  color: #777;
+  color: var(--sub-display-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color 0.3s ease;
 }
 
 #show {
@@ -71,30 +148,32 @@ body {
   border: none;
   background: transparent;
   outline: none;
-  color: #222;
+  color: var(--display-text);
   font-family: inherit;
   font-weight: 600;
+  transition: color 0.3s ease;
 }
 
 #in-btn {
-   display: grid;
+  display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
   width: 100%;
 }
 
 button {
- padding: 1rem;
+  padding: 1rem;
   font-size: 1.2rem;
   border: none;
   border-radius: 10px;
-  background: #e0e0e0;
+  background: var(--btn-bg);
+  color: var(--btn-text);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 button:hover {
-  background: #d5d5d5;
+  background: var(--btn-hover);
 }
 
 button:active,
@@ -104,21 +183,21 @@ button.pressed {
 }
 
 .operator {
-  background: #ff8c42;
-  color: white;
+  background: var(--operator-bg);
+  color: var(--operator-text);
 }
 
 .operator:hover {
-  background: #ff7b24;
+  background: var(--operator-hover);
 }
 
 .equal {
-  background: #28a745;
-  color: white;
+  background: var(--equal-bg);
+  color: var(--equal-text);
 }
 
 .equal:hover {
-  background: #218838;
+  background: var(--equal-hover);
 }
 
 #reset {

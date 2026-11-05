@@ -6,16 +6,20 @@
     <title>Count-Up</title>
     
     <link rel="stylesheet" href="style.css" />
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Pacifico&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 
   </head>
   <body>
    <div id="out">
     <div id="box">
-      <h1 id="brand">CountUp</h1>
+      <div id="header">
+        <h1 id="brand">CountUp</h1>
+        <button id="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
       <div id="display-container">
         <div id="sub-display"></div>
         <input type="text" id="show" readonly placeholder="0" />
