@@ -168,6 +168,82 @@
             <button class="sci-operator" data-action="+" type="button">+</button>
           </div>
         </div>
+
+        <!-- Programmer Mode View -->
+        <div id="programmer-view" class="mode-view">
+          <div id="prog-display-container" class="calc-display-container">
+            <div id="prog-sub-display" class="calc-sub-display"></div>
+            <input type="text" id="prog-show" class="calc-main-show" readonly placeholder="0" />
+          </div>
+
+          <!-- Simultaneous 4-Base Monitor -->
+          <div id="prog-base-monitor">
+            <button type="button" class="base-row" data-base="HEX">
+              <span class="base-label">HEX</span>
+              <span id="val-hex" class="base-val">0</span>
+            </button>
+            <button type="button" class="base-row active" data-base="DEC">
+              <span class="base-label">DEC</span>
+              <span id="val-dec" class="base-val">0</span>
+            </button>
+            <button type="button" class="base-row" data-base="OCT">
+              <span class="base-label">OCT</span>
+              <span id="val-oct" class="base-val">0</span>
+            </button>
+            <button type="button" class="base-row" data-base="BIN">
+              <span class="base-label">BIN</span>
+              <span id="val-bin" class="base-val">0</span>
+            </button>
+          </div>
+
+          <div class="word-size-row">
+            <button id="prog-word-size" type="button" class="word-toggle" title="Cycle word size">QWORD (64-bit)</button>
+          </div>
+
+          <div id="prog-btn" class="prog-grid">
+            <button class="prog-hex-key" data-hex="A" type="button">A</button>
+            <button class="prog-hex-key" data-hex="B" type="button">B</button>
+            <button class="prog-op" data-action="AND" type="button">AND</button>
+            <button class="prog-op" data-action="OR" type="button">OR</button>
+            <button class="prog-op" data-action="NOT" type="button">NOT</button>
+
+            <button class="prog-hex-key" data-hex="C" type="button">C</button>
+            <button class="prog-hex-key" data-hex="D" type="button">D</button>
+            <button class="prog-op" data-action="XOR" type="button">XOR</button>
+            <button class="prog-op" data-action="<<" type="button">Lsh</button>
+            <button class="prog-op" data-action=">>" type="button">Rsh</button>
+
+            <button class="prog-hex-key" data-hex="E" type="button">E</button>
+            <button class="prog-hex-key" data-hex="F" type="button">F</button>
+            <button class="prog-op" data-action="(" type="button">(</button>
+            <button class="prog-op" data-action=")" type="button">)</button>
+            <button class="prog-op reset-btn" id="prog-reset" type="button">Reset</button>
+
+            <button class="prog-num" data-num="7" type="button">7</button>
+            <button class="prog-num" data-num="8" type="button">8</button>
+            <button class="prog-num" data-num="9" type="button">9</button>
+            <button class="prog-op del-btn" id="prog-del" type="button">Del</button>
+            <button class="prog-op" data-action="/" type="button">&divide;</button>
+
+            <button class="prog-num" data-num="4" type="button">4</button>
+            <button class="prog-num" data-num="5" type="button">5</button>
+            <button class="prog-num" data-num="6" type="button">6</button>
+            <button class="prog-op" data-action="%" type="button">Mod</button>
+            <button class="prog-op" data-action="*" type="button">&times;</button>
+
+            <button class="prog-num" data-num="1" type="button">1</button>
+            <button class="prog-num" data-num="2" type="button">2</button>
+            <button class="prog-num" data-num="3" type="button">3</button>
+            <button class="prog-op" data-action="pm" type="button">&plusmn;</button>
+            <button class="prog-op" data-action="-" type="button">&minus;</button>
+
+            <button class="prog-num" data-num="0" type="button">0</button>
+            <button class="prog-num" data-num="00" type="button">00</button>
+            <button class="prog-op" data-action="ans" type="button">Ans</button>
+            <button class="prog-equal" id="prog-equal" type="button">=</button>
+            <button class="prog-op" data-action="+" type="button">+</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
