@@ -52,6 +52,16 @@ function handleInput(value) {
     return;
   }
 
+  if (value === "±") {
+    toggleSign();
+    return;
+  }
+
+  if (value === "%") {
+    applyPercentage();
+    return;
+  }
+
   if (value === "=") {
     if (!currentInput || currentInput === "Error" || currentInput === "Cannot divide by zero") {
       return;
@@ -152,6 +162,61 @@ function highlightButton(button) {
   }, 120);
 }
 
+function toggleSign() {
+  if (currentInput === "Error" || currentInput === "Cannot divide by zero") return;
+  if (!currentInput) {
+    currentInput = "-";
+    display.value = currentInput;
+    return;
+  }
+  if (currentInput === "-") {
+    currentInput = "";
+    display.value = "";
+    return;
+  }
+
+  if (isEvaluated) {
+    currentInput = currentInput.startsWith("-") ? currentInput.slice(1) : "-" + currentInput;
+    display.value = currentInput;
+    isEvaluated = false;
+    return;
+  }
+
+  if (/^-?\d*\.?\d+$/.test(currentInput)) {
+    currentInput = currentInput.startsWith("-") ? currentInput.slice(1) : "-" + currentInput;
+    display.value = currentInput;
+    return;
+  }
+
+  const negMatch = currentInput.match(/(.*[+\-*/])\s*-\s*(\d*\.?\d+)$/);
+  if (negMatch) {
+    currentInput = negMatch[1] + negMatch[2];
+    display.value = currentInput;
+    return;
+  }
+
+  const posMatch = currentInput.match(/(.*[+\-*/])\s*(\d*\.?\d+)$/);
+  if (posMatch) {
+    currentInput = posMatch[1] + "-" + posMatch[2];
+    display.value = currentInput;
+    return;
+  }
+}
+
+function applyPercentage() {
+  if (!currentInput || currentInput === "Error" || currentInput === "Cannot divide by zero") return;
+  const match = currentInput.match(/(.*[+\-*/])?\s*(-?\d*\.?\d+)$/);
+  if (match) {
+    const prefix = match[1] || "";
+    const numStr = match[2];
+    const val = parseFloat(numStr) / 100;
+    const formatted = String(parseFloat(val.toPrecision(12)));
+    currentInput = prefix + formatted;
+    display.value = currentInput;
+    isEvaluated = false;
+  }
+}
+
 function findButtonForKey(key) {
   if (key === "Enter" || key === "=") {
     return document.querySelector("#equal");
@@ -161,6 +226,9 @@ function findButtonForKey(key) {
   }
   if (key === "Escape" || key === "Delete") {
     return document.querySelector("#reset");
+  }
+  if (key === "%") {
+    return document.querySelector("#percent");
   }
   return Array.from(buttons).find((b) => b.textContent.trim() === key);
 }
@@ -173,6 +241,7 @@ window.addEventListener("keydown", (event) => {
     isOperator(key) ||
     key === "." ||
     key === "=" ||
+    key === "%" ||
     key === "Enter" ||
     key === "Backspace" ||
     key === "Escape" ||
