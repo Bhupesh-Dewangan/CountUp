@@ -114,6 +114,13 @@ body {
   transform: scale(0.95);
 }
 
+.theme-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--btn-text);
+}
+
 #display-container {
   width: 100%;
   min-height: 4.5rem;
