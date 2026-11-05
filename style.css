@@ -75,8 +75,9 @@ body {
   transition: background 0.3s ease, box-shadow 0.3s ease, width 0.3s ease;
 }
 
-#box.scientific-mode {
-  width: 23.5rem;
+#box.scientific-mode,
+#box.programmer-mode {
+  width: 24rem;
   max-width: 96vw;
 }
 
@@ -371,6 +372,135 @@ body {
 
 .sci-equal:hover {
   background: var(--equal-hover);
+}
+
+/* Programmer Mode Styles */
+#prog-base-monitor {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.6rem;
+}
+
+.base-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  color: var(--sub-display-text);
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.base-row:hover {
+  background: var(--btn-hover);
+}
+
+.base-row.active {
+  background: var(--display-bg);
+  color: var(--display-text);
+  font-weight: 600;
+  border-left: 3px solid var(--operator-bg);
+}
+
+.base-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.base-val {
+  font-family: monospace, 'Courier New', Courier;
+  font-size: 0.88rem;
+  max-width: 17rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.word-size-row {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.6rem;
+}
+
+.word-toggle {
+  background: var(--toggle-bg);
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  color: var(--btn-text);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.word-toggle:hover {
+  filter: brightness(0.95);
+}
+
+.prog-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.prog-grid button {
+  padding: 0.72rem 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+}
+
+.prog-hex-key {
+  background: var(--btn-hover);
+  color: var(--btn-text);
+  font-weight: 600;
+}
+
+.prog-hex-key:hover {
+  filter: brightness(0.93);
+}
+
+.prog-op {
+  background: var(--btn-hover);
+  color: var(--btn-text);
+  font-size: 0.88rem;
+}
+
+.prog-op:hover {
+  filter: brightness(0.93);
+}
+
+.prog-num {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+.prog-equal {
+  background: var(--equal-bg);
+  color: var(--equal-text);
+  font-weight: 600;
+}
+
+.prog-equal:hover {
+  background: var(--equal-hover);
+}
+
+.prog-grid button.disabled-key {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: default;
 }
 
 #in-btn {
