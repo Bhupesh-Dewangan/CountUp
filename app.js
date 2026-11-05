@@ -1,4 +1,5 @@
 const display = document.querySelector("#show");
+const subDisplay = document.querySelector("#sub-display");
 const buttons = document.querySelectorAll("#in-btn button");
 
 let currentInput = "";
@@ -35,6 +36,7 @@ function handleInput(value) {
     currentInput = "";
     isEvaluated = false;
     display.value = "";
+    if (subDisplay) subDisplay.textContent = "";
     return;
   }
 
@@ -42,6 +44,7 @@ function handleInput(value) {
     if (isEvaluated || currentInput === "Error" || currentInput === "Cannot divide by zero") {
       currentInput = "";
       isEvaluated = false;
+      if (subDisplay) subDisplay.textContent = "";
     } else {
       currentInput = currentInput.slice(0, -1);
     }
@@ -53,7 +56,11 @@ function handleInput(value) {
     if (!currentInput || currentInput === "Error" || currentInput === "Cannot divide by zero") {
       return;
     }
+    const exprForSub = currentInput.replace(/[+\-*/]+$/, "").trim();
     const result = calculateResult(currentInput);
+    if (subDisplay && exprForSub) {
+      subDisplay.textContent = `${exprForSub} =`;
+    }
     currentInput = result;
     isEvaluated = true;
     display.value = currentInput;
@@ -75,6 +82,10 @@ function handleInput(value) {
       return;
     }
 
+    if (isEvaluated && subDisplay) {
+      subDisplay.textContent = `Ans = ${currentInput}`;
+    }
+
     // If an operator is already at the end, replace it with the new operator
     if (isOperator(currentInput.slice(-1))) {
       currentInput = currentInput.slice(0, -1) + value;
@@ -90,6 +101,7 @@ function handleInput(value) {
   // Decimal point handling
   if (value === ".") {
     if (isEvaluated || currentInput === "Error" || currentInput === "Cannot divide by zero") {
+      if (subDisplay && isEvaluated) subDisplay.textContent = `Ans = ${currentInput}`;
       currentInput = "0.";
       isEvaluated = false;
       display.value = currentInput;
@@ -116,6 +128,7 @@ function handleInput(value) {
 
   // Number digits (0-9)
   if (isEvaluated || currentInput === "Error" || currentInput === "Cannot divide by zero") {
+    if (subDisplay && isEvaluated) subDisplay.textContent = `Ans = ${currentInput}`;
     currentInput = value;
     isEvaluated = false;
   } else {
