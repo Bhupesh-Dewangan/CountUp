@@ -236,6 +236,12 @@ function findButtonForKey(key) {
 window.addEventListener("keydown", (event) => {
   const { key } = event;
 
+  if (key === "Escape" && navDrawer && !navDrawer.classList.contains("drawer-hidden")) {
+    event.preventDefault();
+    closeDrawer();
+    return;
+  }
+
   if (
     /^[0-9]$/.test(key) ||
     isOperator(key) ||
@@ -297,3 +303,62 @@ if (themeToggleBtn) {
     localStorage.setItem("countup_theme", nextTheme);
   });
 }
+
+// Navigation Drawer & Mode Router
+const menuToggleBtn = document.querySelector("#menu-toggle");
+const closeDrawerBtn = document.querySelector("#close-drawer");
+const navDrawer = document.querySelector("#nav-drawer");
+const drawerBackdrop = document.querySelector("#drawer-backdrop");
+const modeItems = document.querySelectorAll(".mode-item");
+const modeBadge = document.querySelector("#mode-badge");
+
+function openDrawer() {
+  if (navDrawer && drawerBackdrop) {
+    navDrawer.classList.remove("drawer-hidden");
+    drawerBackdrop.classList.remove("backdrop-hidden");
+  }
+}
+
+function closeDrawer() {
+  if (navDrawer && drawerBackdrop) {
+    navDrawer.classList.add("drawer-hidden");
+    drawerBackdrop.classList.add("backdrop-hidden");
+  }
+}
+
+if (menuToggleBtn) menuToggleBtn.addEventListener("click", openDrawer);
+if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeDrawer);
+if (drawerBackdrop) drawerBackdrop.addEventListener("click", closeDrawer);
+
+function switchMode(modeName) {
+  modeItems.forEach((item) => {
+    item.classList.toggle("active", item.dataset.mode === modeName);
+  });
+
+  const activeItem = Array.from(modeItems).find((item) => item.dataset.mode === modeName);
+  if (activeItem && modeBadge) {
+    const label = activeItem.querySelector("span");
+    if (label) modeBadge.textContent = label.textContent.trim();
+  }
+
+  const views = document.querySelectorAll(".mode-view");
+  views.forEach((view) => view.classList.remove("active-view"));
+
+  const targetView = document.querySelector(`#${modeName}-view`);
+  if (targetView) {
+    targetView.classList.add("active-view");
+  }
+
+  localStorage.setItem("countup_mode", modeName);
+  closeDrawer();
+}
+
+modeItems.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    switchMode(btn.dataset.mode);
+  });
+});
+
+// Restore saved mode or default to standard
+const savedMode = localStorage.getItem("countup_mode") || "standard";
+switchMode(savedMode);
