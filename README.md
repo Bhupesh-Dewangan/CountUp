@@ -1,6 +1,6 @@
 # CountUp - Advanced Multi-Calculator Suite
 
-CountUp is a high-precision, multi-mode calculator and numerical utility suite engineered with pure Vanilla JavaScript (ES6+), HTML5, and CSS3. Designed with a modular architecture and clean neumorphic glassmorphism aesthetics, CountUp delivers six specialized computational engines in a single, responsive web application without external frameworks or dependencies.
+CountUp is a high-precision, multi-mode calculator and numerical utility suite engineered with pure Vanilla JavaScript (ES6+), HTML5, and CSS3. Designed with a modular architecture and clean neumorphic glassmorphism aesthetics, CountUp delivers seven specialized computational engines in a single, responsive web application without external frameworks or dependencies.
 
 ---
 
@@ -49,6 +49,13 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 * **Date Difference Engine**: Accurate calendar duration measurement between any two points in time.
 * **Duration Projector**: Add or subtract customizable years, months, and days from any date with automatic month-end and leap-year clamping.
 
+### 7. Health & Fitness (BMI) Calculator
+* **Dual Unit Systems**: Seamless real-time conversion between Metric (`cm`, `kg`) and Imperial (`ft`/`in`, `lbs`) unit systems.
+* **WHO Classification**: Standardized body mass index categorization across Underweight, Normal Weight, Overweight, and Obese brackets.
+* **Segmented Range Gauge**: Visual four-stage gauge meter with dynamic needle positioning mapped to calculated BMI scores.
+* **Ideal Weight Range**: Target weight interval projection based on standard healthy BMI bounds (`18.5 - 24.9`).
+* **Health Guidance**: Personalized weight surplus/deficit feedback and BMI Prime ratio calculations.
+
 ---
 
 ## User Interface & Design System
@@ -64,7 +71,7 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 
 ```
 CountUp/
-├── index.html        # Semantic HTML5 markup containing all 6 mode views
+├── index.html        # Semantic HTML5 markup containing all 7 mode views
 ├── style.css         # Modern CSS3 styling, CSS variables, and layout systems
 ├── app.js            # Vanilla JavaScript modular calculation engines and router
 └── README.md         # Comprehensive project documentation
