@@ -77,7 +77,8 @@ body {
 
 #box.scientific-mode,
 #box.programmer-mode,
-#box.financial-mode {
+#box.financial-mode,
+#box.converter-mode {
   width: 24rem;
   max-width: 96vw;
 }
@@ -785,4 +786,161 @@ button.pressed {
 .gst-type-btn.active {
   background: var(--equal-bg);
   color: var(--equal-text);
+}
+
+/* Unit Converter Styles */
+.conv-category-scroll {
+  width: 100%;
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.8rem;
+  scrollbar-width: thin;
+}
+
+.conv-cat-btn {
+  padding: 0.45rem 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 20px;
+  border: none;
+  background: var(--display-bg);
+  color: var(--sub-display-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.conv-cat-btn:hover {
+  background: var(--btn-hover);
+  color: var(--display-text);
+}
+
+.conv-cat-btn.active {
+  background: var(--operator-bg);
+  color: var(--operator-text);
+}
+
+.conv-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.conv-unit-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.conv-unit-block label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--sub-display-text);
+}
+
+.conv-input-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: var(--display-bg);
+  border-radius: 12px;
+  padding: 0.55rem 0.8rem;
+  box-shadow: inset 0 2px 4px var(--shadow-color);
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease;
+  gap: 0.5rem;
+}
+
+.conv-input-row:focus-within {
+  border-color: var(--operator-bg);
+}
+
+.conv-input-row input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--display-text);
+  font-family: inherit;
+  min-width: 0;
+}
+
+.conv-select {
+  border: none;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  outline: none;
+  max-width: 8rem;
+  transition: background 0.2s ease;
+}
+
+.conv-select:hover {
+  background: var(--btn-hover);
+}
+
+.conv-swap-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: -0.2rem 0;
+}
+
+#conv-swap-btn {
+  background: var(--toggle-bg);
+  border: none;
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--btn-text);
+  box-shadow: 0 2px 6px var(--shadow-color);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+#conv-swap-btn:hover {
+  transform: rotate(180deg) scale(1.08);
+}
+
+#conv-swap-btn:active {
+  transform: rotate(180deg) scale(0.95);
+}
+
+.conv-formula-card {
+  width: 100%;
+  background: var(--display-bg);
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.4rem;
+}
+
+.conv-formula-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--sub-display-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.conv-formula-text {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--display-text);
 }
