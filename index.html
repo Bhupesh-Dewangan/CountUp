@@ -440,6 +440,132 @@
             </div>
           </div>
         </div>
+
+        <!-- Date & Age Mode View -->
+        <div id="date-view" class="mode-view">
+          <!-- Sub-tool Tabs -->
+          <div class="date-tabs">
+            <button type="button" class="date-tab-btn active" data-datesub="age">Age Calculator</button>
+            <button type="button" class="date-tab-btn" data-datesub="diff">Date Difference</button>
+            <button type="button" class="date-tab-btn" data-datesub="addsub">Add / Subtract</button>
+          </div>
+
+          <!-- Sub-tool 1: Age Calculator -->
+          <div id="date-subtab-age" class="date-subtab-panel active-subtab">
+            <div class="date-input-group">
+              <label for="age-dob">Date of Birth</label>
+              <input type="date" id="age-dob" class="date-picker-input" />
+            </div>
+
+            <div class="date-input-group">
+              <label for="age-target">Age at Date</label>
+              <input type="date" id="age-target" class="date-picker-input" />
+            </div>
+
+            <button type="button" id="age-calc-btn" class="date-submit-btn">Calculate Age</button>
+
+            <!-- Results Card -->
+            <div class="date-results-card">
+              <div class="date-stat-primary">
+                <span class="date-stat-label">Current Age</span>
+                <span id="age-res-primary" class="date-primary-val">Select dates to calculate</span>
+              </div>
+              <div class="date-stat-grid">
+                <div class="date-mini-stat">
+                  <span class="date-mini-label">Total Months</span>
+                  <span id="age-res-months" class="date-mini-val">-</span>
+                </div>
+                <div class="date-mini-stat">
+                  <span class="date-mini-label">Total Weeks</span>
+                  <span id="age-res-weeks" class="date-mini-val">-</span>
+                </div>
+                <div class="date-mini-stat">
+                  <span class="date-mini-label">Total Days</span>
+                  <span id="age-res-days" class="date-mini-val">-</span>
+                </div>
+                <div class="date-mini-stat">
+                  <span class="date-mini-label">Next Birthday</span>
+                  <span id="age-res-next" class="date-mini-val">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tool 2: Date Difference -->
+          <div id="date-subtab-diff" class="date-subtab-panel">
+            <div class="date-input-group">
+              <label for="diff-start">Start Date</label>
+              <input type="date" id="diff-start" class="date-picker-input" />
+            </div>
+
+            <div class="date-input-group">
+              <label for="diff-end">End Date</label>
+              <input type="date" id="diff-end" class="date-picker-input" />
+            </div>
+
+            <button type="button" id="diff-calc-btn" class="date-submit-btn">Calculate Difference</button>
+
+            <!-- Results Card -->
+            <div class="date-results-card">
+              <div class="date-stat-primary">
+                <span class="date-stat-label">Difference</span>
+                <span id="diff-res-primary" class="date-primary-val">0 Days</span>
+              </div>
+              <div class="date-stat-grid">
+                <div class="date-mini-stat">
+                  <span class="date-mini-label">Calendar Days</span>
+                  <span id="diff-res-days" class="date-mini-val">0</span>
+                </div>
+                <div class="date-mini-stat">
+                  <span class="date-mini-label">Weeks & Days</span>
+                  <span id="diff-res-weeks" class="date-mini-val">0 Weeks, 0 Days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tool 3: Add / Subtract Duration -->
+          <div id="date-subtab-addsub" class="date-subtab-panel">
+            <div class="date-input-group">
+              <label for="addsub-start">Start Date</label>
+              <input type="date" id="addsub-start" class="date-picker-input" />
+            </div>
+
+            <div class="date-action-toggle">
+              <button type="button" id="addsub-mode-add" class="date-type-btn active" data-op="add">Add (+)</button>
+              <button type="button" id="addsub-mode-sub" class="date-type-btn" data-op="sub">Subtract (&minus;)</button>
+            </div>
+
+            <div class="date-duration-inputs">
+              <div class="date-dur-field">
+                <label for="addsub-years">Years</label>
+                <input type="number" id="addsub-years" value="0" min="0" />
+              </div>
+              <div class="date-dur-field">
+                <label for="addsub-months">Months</label>
+                <input type="number" id="addsub-months" value="0" min="0" />
+              </div>
+              <div class="date-dur-field">
+                <label for="addsub-days">Days</label>
+                <input type="number" id="addsub-days" value="30" min="0" />
+              </div>
+            </div>
+
+            <button type="button" id="addsub-calc-btn" class="date-submit-btn">Calculate Target Date</button>
+
+            <!-- Results Card -->
+            <div class="date-results-card">
+              <div class="date-stat-primary">
+                <span class="date-stat-label">Resulting Date</span>
+                <span id="addsub-res-date" class="date-primary-val">Select parameters</span>
+              </div>
+              <div class="fin-stat-item">
+                <span class="fin-stat-label">Day of Week</span>
+                <span id="addsub-res-dayname" class="fin-stat-val">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
