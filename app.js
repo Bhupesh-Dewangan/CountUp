@@ -354,6 +354,7 @@ function switchMode(modeName) {
     box.classList.toggle("scientific-mode", modeName === "scientific");
     box.classList.toggle("programmer-mode", modeName === "programmer");
     box.classList.toggle("financial-mode", modeName === "financial");
+    box.classList.toggle("converter-mode", modeName === "converter");
   }
 
   localStorage.setItem("countup_mode", modeName);
@@ -1179,3 +1180,216 @@ if (gstModeRemoveBtn) {
 }
 
 if (gstAmountInput) gstAmountInput.addEventListener("input", calculateGST);
+
+// Unit Converter Engine
+const convCatBtns = document.querySelectorAll(".conv-cat-btn");
+const convFromInput = document.querySelector("#conv-from-val");
+const convToInput = document.querySelector("#conv-to-val");
+const convFromSelect = document.querySelector("#conv-from-unit");
+const convToSelect = document.querySelector("#conv-to-unit");
+const convSwapBtn = document.querySelector("#conv-swap-btn");
+const convFormulaVal = document.querySelector("#conv-formula-val");
+
+let convActiveCat = "length";
+
+const unitDefinitions = {
+  length: {
+    name: "Length",
+    defaultFrom: "Meter",
+    defaultTo: "Foot",
+    units: {
+      Meter: 1,
+      Kilometer: 1000,
+      Centimeter: 0.01,
+      Millimeter: 0.001,
+      Mile: 1609.344,
+      Yard: 0.9144,
+      Foot: 0.3048,
+      Inch: 0.0254,
+    },
+  },
+  weight: {
+    name: "Weight",
+    defaultFrom: "Kilogram",
+    defaultTo: "Pound",
+    units: {
+      Kilogram: 1,
+      Gram: 0.001,
+      Milligram: 0.000001,
+      "Metric Ton": 1000,
+      Pound: 0.45359237,
+      Ounce: 0.028349523125,
+    },
+  },
+  temperature: {
+    name: "Temperature",
+    defaultFrom: "Celsius",
+    defaultTo: "Fahrenheit",
+    units: {
+      Celsius: "C",
+      Fahrenheit: "F",
+      Kelvin: "K",
+    },
+  },
+  data: {
+    name: "Data",
+    defaultFrom: "Megabyte",
+    defaultTo: "Gigabyte",
+    units: {
+      Byte: 1,
+      Kilobyte: 1024,
+      Megabyte: 1048576,
+      Gigabyte: 1073741824,
+      Terabyte: 1099511627776,
+      Bit: 0.125,
+    },
+  },
+  speed: {
+    name: "Speed",
+    defaultFrom: "km/h",
+    defaultTo: "mph",
+    units: {
+      "m/s": 1,
+      "km/h": 1 / 3.6,
+      mph: 0.44704,
+      Knot: 0.514444,
+    },
+  },
+};
+
+function convertUnits(cat, val, fromU, toU) {
+  if (isNaN(val)) return 0;
+  if (fromU === toU) return val;
+
+  if (cat === "temperature") {
+    let c = val;
+    if (fromU === "Fahrenheit") c = ((val - 32) * 5) / 9;
+    else if (fromU === "Kelvin") c = val - 273.15;
+
+    if (toU === "Celsius") return c;
+    if (toU === "Fahrenheit") return (c * 9) / 5 + 32;
+    if (toU === "Kelvin") return c + 273.15;
+    return c;
+  }
+
+  const units = unitDefinitions[cat].units;
+  const inBase = val * units[fromU];
+  return inBase / units[toU];
+}
+
+function formatConvertedNumber(num) {
+  if (num === 0) return "0";
+  if (Math.abs(num) < 0.00001 || Math.abs(num) >= 1e9) {
+    return num.toExponential(6).replace(/\.?0+e/, "e");
+  }
+  return String(parseFloat(num.toPrecision(8)));
+}
+
+function updateFormulaPreview() {
+  if (!convFormulaVal || !convFromSelect || !convToSelect) return;
+  const fromU = convFromSelect.value;
+  const toU = convToSelect.value;
+
+  if (convActiveCat === "temperature") {
+    if (fromU === "Celsius" && toU === "Fahrenheit") {
+      convFormulaVal.textContent = "(°C × 9/5) + 32 = °F";
+    } else if (fromU === "Fahrenheit" && toU === "Celsius") {
+      convFormulaVal.textContent = "(°F − 32) × 5/9 = °C";
+    } else if (fromU === "Celsius" && toU === "Kelvin") {
+      convFormulaVal.textContent = "°C + 273.15 = K";
+    } else {
+      convFormulaVal.textContent = `${fromU} to ${toU}`;
+    }
+  } else {
+    const rate = convertUnits(convActiveCat, 1, fromU, toU);
+    convFormulaVal.textContent = `1 ${fromU} = ${formatConvertedNumber(rate)} ${toU}`;
+  }
+}
+
+function syncConversion(direction = "forward") {
+  if (!convFromInput || !convToInput || !convFromSelect || !convToSelect) return;
+
+  const fromU = convFromSelect.value;
+  const toU = convToSelect.value;
+
+  if (direction === "forward") {
+    const val = parseFloat(convFromInput.value);
+    if (isNaN(val)) {
+      convToInput.value = "";
+    } else {
+      const res = convertUnits(convActiveCat, val, fromU, toU);
+      convToInput.value = formatConvertedNumber(res);
+    }
+  } else {
+    const val = parseFloat(convToInput.value);
+    if (isNaN(val)) {
+      convFromInput.value = "";
+    } else {
+      const res = convertUnits(convActiveCat, val, toU, fromU);
+      convFromInput.value = formatConvertedNumber(res);
+    }
+  }
+
+  updateFormulaPreview();
+}
+
+function populateUnitSelects(catKey) {
+  if (!convFromSelect || !convToSelect) return;
+  const def = unitDefinitions[catKey];
+  if (!def) return;
+
+  convFromSelect.innerHTML = "";
+  convToSelect.innerHTML = "";
+
+  Object.keys(def.units).forEach((unitName) => {
+    const optFrom = document.createElement("option");
+    optFrom.value = unitName;
+    optFrom.textContent = unitName;
+    if (unitName === def.defaultFrom) optFrom.selected = true;
+    convFromSelect.appendChild(optFrom);
+
+    const optTo = document.createElement("option");
+    optTo.value = unitName;
+    optTo.textContent = unitName;
+    if (unitName === def.defaultTo) optTo.selected = true;
+    convToSelect.appendChild(optTo);
+  });
+
+  syncConversion("forward");
+}
+
+convCatBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    convCatBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    convActiveCat = btn.dataset.cat;
+    populateUnitSelects(convActiveCat);
+  });
+});
+
+if (convFromInput) {
+  convFromInput.addEventListener("input", () => syncConversion("forward"));
+}
+
+if (convToInput) {
+  convToInput.addEventListener("input", () => syncConversion("backward"));
+}
+
+if (convFromSelect) {
+  convFromSelect.addEventListener("change", () => syncConversion("forward"));
+}
+
+if (convToSelect) {
+  convToSelect.addEventListener("change", () => syncConversion("forward"));
+}
+
+if (convSwapBtn) {
+  convSwapBtn.addEventListener("click", () => {
+    const prevFrom = convFromSelect.value;
+    convFromSelect.value = convToSelect.value;
+    convToSelect.value = prevFrom;
+    syncConversion("forward");
+  });
+}
+
+populateUnitSelects("length");
