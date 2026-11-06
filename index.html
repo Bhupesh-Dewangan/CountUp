@@ -78,6 +78,12 @@
               <span>Date & Age</span>
             </button>
           </li>
+          <li>
+            <button class="mode-item" data-mode="bmi">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <span>Health & BMI</span>
+            </button>
+          </li>
         </ul>
       </div>
       <div id="drawer-backdrop" class="backdrop-hidden"></div>
@@ -562,6 +568,108 @@
               <div class="fin-stat-item">
                 <span class="fin-stat-label">Day of Week</span>
                 <span id="addsub-res-dayname" class="fin-stat-val">-</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Health & Fitness (BMI) Mode View -->
+        <div id="bmi-view" class="mode-view">
+          <!-- Unit System Toggle -->
+          <div class="bmi-unit-toggle">
+            <button type="button" id="bmi-unit-metric" class="bmi-unit-btn active" data-unit="metric">Metric (cm, kg)</button>
+            <button type="button" id="bmi-unit-imperial" class="bmi-unit-btn" data-unit="imperial">Imperial (ft, in, lbs)</button>
+          </div>
+
+          <!-- Input Fields Container -->
+          <div class="bmi-form-card">
+            <!-- Height Input Group -->
+            <div class="bmi-field-group">
+              <label>Height</label>
+              <!-- Metric Height -->
+              <div id="bmi-metric-height-wrap" class="bmi-input-wrap">
+                <input type="number" id="bmi-height-cm" placeholder="175" value="175" min="40" max="260" />
+                <span class="bmi-suffix">cm</span>
+              </div>
+              <!-- Imperial Height (Feet & Inches) -->
+              <div id="bmi-imperial-height-wrap" class="bmi-input-row" style="display: none;">
+                <div class="bmi-input-wrap flex-1">
+                  <input type="number" id="bmi-height-ft" placeholder="5" value="5" min="1" max="8" />
+                  <span class="bmi-suffix">ft</span>
+                </div>
+                <div class="bmi-input-wrap flex-1">
+                  <input type="number" id="bmi-height-in" placeholder="9" value="9" min="0" max="11" />
+                  <span class="bmi-suffix">in</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Weight Input Group -->
+            <div class="bmi-field-group">
+              <label>Weight</label>
+              <!-- Metric Weight -->
+              <div id="bmi-metric-weight-wrap" class="bmi-input-wrap">
+                <input type="number" id="bmi-weight-kg" placeholder="70" value="70" step="0.5" min="15" max="350" />
+                <span class="bmi-suffix">kg</span>
+              </div>
+              <!-- Imperial Weight -->
+              <div id="bmi-imperial-weight-wrap" class="bmi-input-wrap" style="display: none;">
+                <input type="number" id="bmi-weight-lbs" placeholder="154" value="154" step="0.5" min="30" max="750" />
+                <span class="bmi-suffix">lbs</span>
+              </div>
+            </div>
+
+            <button type="button" id="bmi-calc-btn" class="bmi-submit-btn">Calculate BMI</button>
+          </div>
+
+          <!-- BMI Results Card -->
+          <div class="bmi-results-card">
+            <!-- Score & Classification Badge -->
+            <div class="bmi-header-result">
+              <div class="bmi-score-box">
+                <span class="bmi-score-label">BMI Score</span>
+                <span id="bmi-res-score" class="bmi-score-val">22.9</span>
+              </div>
+              <div class="bmi-badge-box">
+                <span id="bmi-res-badge" class="bmi-category-badge category-normal">Normal Weight</span>
+              </div>
+            </div>
+
+            <!-- Visual Gradient Scale / Range Gauge -->
+            <div class="bmi-gauge-wrap">
+              <div class="bmi-gauge-bar">
+                <div class="gauge-seg seg-under" title="Underweight (<18.5)"></div>
+                <div class="gauge-seg seg-normal" title="Normal (18.5-24.9)"></div>
+                <div class="gauge-seg seg-over" title="Overweight (25-29.9)"></div>
+                <div class="gauge-seg seg-obese" title="Obese (>=30)"></div>
+              </div>
+              <div id="bmi-gauge-pointer" class="bmi-gauge-pointer" style="left: 36%;"></div>
+              <div class="bmi-gauge-labels">
+                <span>16.0</span>
+                <span>18.5</span>
+                <span>25.0</span>
+                <span>30.0</span>
+                <span>40.0</span>
+              </div>
+            </div>
+
+            <!-- Stat Breakdown Grid -->
+            <div class="bmi-stat-grid">
+              <div class="bmi-mini-stat">
+                <span class="bmi-mini-label">Healthy Weight Range</span>
+                <span id="bmi-res-ideal" class="bmi-mini-val">56.7 kg - 76.3 kg</span>
+              </div>
+              <div class="bmi-mini-stat">
+                <span class="bmi-mini-label">Weight Status</span>
+                <span id="bmi-res-status" class="bmi-mini-val">Healthy Range</span>
+              </div>
+              <div class="bmi-mini-stat">
+                <span class="bmi-mini-label">Weight Target</span>
+                <span id="bmi-res-diff" class="bmi-mini-val">Optimal weight</span>
+              </div>
+              <div class="bmi-mini-stat">
+                <span class="bmi-mini-label">BMI Prime</span>
+                <span id="bmi-res-prime" class="bmi-mini-val">0.92</span>
               </div>
             </div>
           </div>
