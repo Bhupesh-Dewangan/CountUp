@@ -78,7 +78,8 @@ body {
 #box.scientific-mode,
 #box.programmer-mode,
 #box.financial-mode,
-#box.converter-mode {
+#box.converter-mode,
+#box.date-mode {
   width: 24rem;
   max-width: 96vw;
 }
@@ -943,4 +944,236 @@ button.pressed {
   font-size: 0.92rem;
   font-weight: 600;
   color: var(--display-text);
+}
+
+/* Date & Age Calculator Styles */
+.date-tabs {
+  width: 100%;
+  display: flex;
+  background: var(--display-bg);
+  border-radius: 10px;
+  padding: 0.25rem;
+  margin-bottom: 1rem;
+  gap: 0.3rem;
+}
+
+.date-tab-btn {
+  flex: 1;
+  padding: 0.55rem 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--sub-display-text);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.date-tab-btn:hover {
+  color: var(--display-text);
+}
+
+.date-tab-btn.active {
+  background: var(--btn-bg);
+  color: var(--display-text);
+  box-shadow: 0 2px 6px var(--shadow-color);
+}
+
+.date-subtab-panel {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.date-subtab-panel.active-subtab {
+  display: flex;
+}
+
+.date-input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.date-input-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--sub-display-text);
+}
+
+.date-picker-input {
+  width: 100%;
+  background: var(--display-bg);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid transparent;
+  color: var(--display-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  outline: none;
+  box-shadow: inset 0 2px 4px var(--shadow-color);
+  transition: border-color 0.2s ease;
+  cursor: pointer;
+  color-scheme: light dark;
+}
+
+.date-picker-input:focus {
+  border-color: var(--operator-bg);
+}
+
+.date-submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: none;
+  background: var(--operator-bg);
+  color: var(--operator-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  margin-top: 0.2rem;
+}
+
+.date-submit-btn:hover {
+  background: var(--operator-hover);
+}
+
+.date-submit-btn:active {
+  transform: scale(0.98);
+}
+
+.date-results-card {
+  width: 100%;
+  background: var(--display-bg);
+  border-radius: 12px;
+  padding: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+.date-stat-primary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--btn-bg);
+}
+
+.date-stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--sub-display-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.date-primary-val {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--operator-bg);
+  line-height: 1.3;
+}
+
+.date-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.date-mini-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  background: var(--btn-bg);
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+}
+
+.date-mini-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--sub-display-text);
+}
+
+.date-mini-val {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--display-text);
+}
+
+.date-action-toggle {
+  display: flex;
+  width: 100%;
+  background: var(--display-bg);
+  border-radius: 8px;
+  padding: 0.2rem;
+  gap: 0.3rem;
+}
+
+.date-type-btn {
+  flex: 1;
+  padding: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--sub-display-text);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.date-type-btn:hover {
+  color: var(--display-text);
+}
+
+.date-type-btn.active {
+  background: var(--btn-bg);
+  color: var(--display-text);
+  box-shadow: 0 1px 4px var(--shadow-color);
+}
+
+.date-duration-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.date-dur-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.date-dur-field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--sub-display-text);
+}
+
+.date-dur-field input {
+  width: 100%;
+  background: var(--display-bg);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--display-text);
+  font-family: inherit;
+  outline: none;
+  box-shadow: inset 0 2px 4px var(--shadow-color);
+  transition: border-color 0.2s ease;
+}
+
+.date-dur-field input:focus {
+  border-color: var(--operator-bg);
 }
