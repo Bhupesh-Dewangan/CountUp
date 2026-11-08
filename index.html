@@ -323,140 +323,152 @@
 
           <!-- Sub-tool 1: Loan / EMI Calculator -->
           <div id="fin-subtab-emi" class="fin-subtab-panel active-subtab">
-            <div class="fin-input-group">
-              <label for="emi-principal">Loan Amount</label>
-              <div class="fin-input-wrap">
-                <span class="fin-prefix">₹</span>
-                <input type="number" id="emi-principal" placeholder="100000" value="100000" min="0" />
+            <div class="fin-inputs-col">
+              <div class="fin-input-group">
+                <label for="emi-principal">Loan Amount</label>
+                <div class="fin-input-wrap">
+                  <span class="fin-prefix">₹</span>
+                  <input type="number" id="emi-principal" placeholder="100000" value="100000" min="0" />
+                </div>
               </div>
+
+              <div class="fin-input-group">
+                <label for="emi-rate">Annual Interest Rate (%)</label>
+                <div class="fin-input-wrap">
+                  <input type="number" id="emi-rate" placeholder="8.5" value="8.5" step="0.1" min="0" />
+                  <span class="fin-suffix">%</span>
+                </div>
+              </div>
+
+              <div class="fin-input-group">
+                <label for="emi-tenure">Tenure (Years)</label>
+                <div class="fin-input-wrap">
+                  <input type="number" id="emi-tenure" placeholder="5" value="5" min="1" max="50" />
+                  <span class="fin-suffix">Yrs</span>
+                </div>
+              </div>
+
+              <button type="button" id="emi-calc-btn" class="fin-submit-btn">Calculate EMI</button>
             </div>
 
-            <div class="fin-input-group">
-              <label for="emi-rate">Annual Interest Rate (%)</label>
-              <div class="fin-input-wrap">
-                <input type="number" id="emi-rate" placeholder="8.5" value="8.5" step="0.1" min="0" />
-                <span class="fin-suffix">%</span>
-              </div>
-            </div>
-
-            <div class="fin-input-group">
-              <label for="emi-tenure">Tenure (Years)</label>
-              <div class="fin-input-wrap">
-                <input type="number" id="emi-tenure" placeholder="5" value="5" min="1" max="50" />
-                <span class="fin-suffix">Yrs</span>
-              </div>
-            </div>
-
-            <button type="button" id="emi-calc-btn" class="fin-submit-btn">Calculate EMI</button>
-
-            <!-- Results Card -->
-            <div class="fin-results-card">
-              <div class="fin-stat-item highlight">
-                <span class="fin-stat-label">Monthly EMI</span>
-                <span id="emi-res-monthly" class="fin-stat-val">₹2,051.65</span>
-              </div>
-              <div class="fin-stat-item">
-                <span class="fin-stat-label">Principal Amount</span>
-                <span id="emi-res-principal" class="fin-stat-val">₹1,00,000.00</span>
-              </div>
-              <div class="fin-stat-item">
-                <span class="fin-stat-label">Total Interest</span>
-                <span id="emi-res-interest" class="fin-stat-val">₹23,099.19</span>
-              </div>
-              <div class="fin-stat-item total">
-                <span class="fin-stat-label">Total Payment</span>
-                <span id="emi-res-total" class="fin-stat-val">₹1,23,099.19</span>
+            <div class="fin-results-col">
+              <!-- Results Card -->
+              <div class="fin-results-card">
+                <div class="fin-stat-item highlight">
+                  <span class="fin-stat-label">Monthly EMI</span>
+                  <span id="emi-res-monthly" class="fin-stat-val">₹2,051.65</span>
+                </div>
+                <div class="fin-stat-item">
+                  <span class="fin-stat-label">Principal Amount</span>
+                  <span id="emi-res-principal" class="fin-stat-val">₹1,00,000.00</span>
+                </div>
+                <div class="fin-stat-item">
+                  <span class="fin-stat-label">Total Interest</span>
+                  <span id="emi-res-interest" class="fin-stat-val">₹23,099.19</span>
+                </div>
+                <div class="fin-stat-item total">
+                  <span class="fin-stat-label">Total Payment</span>
+                  <span id="emi-res-total" class="fin-stat-val">₹1,23,099.19</span>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Sub-tool 2: SIP / Compound Interest -->
           <div id="fin-subtab-sip" class="fin-subtab-panel">
-            <div class="fin-input-group">
-              <label for="sip-monthly">Monthly Investment</label>
-              <div class="fin-input-wrap">
-                <span class="fin-prefix">₹</span>
-                <input type="number" id="sip-monthly" placeholder="5000" value="5000" min="0" />
+            <div class="fin-inputs-col">
+              <div class="fin-input-group">
+                <label for="sip-monthly">Monthly Investment</label>
+                <div class="fin-input-wrap">
+                  <span class="fin-prefix">₹</span>
+                  <input type="number" id="sip-monthly" placeholder="5000" value="5000" min="0" />
+                </div>
               </div>
+
+              <div class="fin-input-group">
+                <label for="sip-rate">Expected Return Rate (% p.a.)</label>
+                <div class="fin-input-wrap">
+                  <input type="number" id="sip-rate" placeholder="12" value="12" step="0.1" min="0" />
+                  <span class="fin-suffix">%</span>
+                </div>
+              </div>
+
+              <div class="fin-input-group">
+                <label for="sip-years">Time Period (Years)</label>
+                <div class="fin-input-wrap">
+                  <input type="number" id="sip-years" placeholder="10" value="10" min="1" max="50" />
+                  <span class="fin-suffix">Yrs</span>
+                </div>
+              </div>
+
+              <button type="button" id="sip-calc-btn" class="fin-submit-btn">Calculate Returns</button>
             </div>
 
-            <div class="fin-input-group">
-              <label for="sip-rate">Expected Return Rate (% p.a.)</label>
-              <div class="fin-input-wrap">
-                <input type="number" id="sip-rate" placeholder="12" value="12" step="0.1" min="0" />
-                <span class="fin-suffix">%</span>
-              </div>
-            </div>
-
-            <div class="fin-input-group">
-              <label for="sip-years">Time Period (Years)</label>
-              <div class="fin-input-wrap">
-                <input type="number" id="sip-years" placeholder="10" value="10" min="1" max="50" />
-                <span class="fin-suffix">Yrs</span>
-              </div>
-            </div>
-
-            <button type="button" id="sip-calc-btn" class="fin-submit-btn">Calculate Returns</button>
-
-            <!-- Results Card -->
-            <div class="fin-results-card">
-              <div class="fin-stat-item highlight">
-                <span class="fin-stat-label">Total Maturity Value</span>
-                <span id="sip-res-maturity" class="fin-stat-val">₹11,61,695.38</span>
-              </div>
-              <div class="fin-stat-item">
-                <span class="fin-stat-label">Invested Amount</span>
-                <span id="sip-res-invested" class="fin-stat-val">₹6,00,000.00</span>
-              </div>
-              <div class="fin-stat-item">
-                <span class="fin-stat-label">Estimated Returns</span>
-                <span id="sip-res-returns" class="fin-stat-val">₹5,61,695.38</span>
+            <div class="fin-results-col">
+              <!-- Results Card -->
+              <div class="fin-results-card">
+                <div class="fin-stat-item highlight">
+                  <span class="fin-stat-label">Total Maturity Value</span>
+                  <span id="sip-res-maturity" class="fin-stat-val">₹11,61,695.38</span>
+                </div>
+                <div class="fin-stat-item">
+                  <span class="fin-stat-label">Invested Amount</span>
+                  <span id="sip-res-invested" class="fin-stat-val">₹6,00,000.00</span>
+                </div>
+                <div class="fin-stat-item">
+                  <span class="fin-stat-label">Estimated Returns</span>
+                  <span id="sip-res-returns" class="fin-stat-val">₹5,61,695.38</span>
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Sub-tool 3: GST / Tax Calculator -->
           <div id="fin-subtab-gst" class="fin-subtab-panel">
-            <div class="fin-input-group">
-              <label for="gst-amount">Amount</label>
-              <div class="fin-input-wrap">
-                <span class="fin-prefix">₹</span>
-                <input type="number" id="gst-amount" placeholder="1000" value="1000" min="0" />
+            <div class="fin-inputs-col">
+              <div class="fin-input-group">
+                <label for="gst-amount">Amount</label>
+                <div class="fin-input-wrap">
+                  <span class="fin-prefix">₹</span>
+                  <input type="number" id="gst-amount" placeholder="1000" value="1000" min="0" />
+                </div>
+              </div>
+
+              <div class="fin-input-group">
+                <label>Tax Rate (%)</label>
+                <div class="gst-slabs">
+                  <button type="button" class="gst-slab-btn" data-rate="5">5%</button>
+                  <button type="button" class="gst-slab-btn" data-rate="12">12%</button>
+                  <button type="button" class="gst-slab-btn active" data-rate="18">18%</button>
+                  <button type="button" class="gst-slab-btn" data-rate="28">28%</button>
+                </div>
+                <div class="fin-input-wrap custom-rate-wrap">
+                  <input type="number" id="gst-custom-rate" placeholder="Custom %" value="18" min="0" step="0.1" />
+                  <span class="fin-suffix">%</span>
+                </div>
+              </div>
+
+              <div class="gst-type-toggle">
+                <button type="button" id="gst-mode-add" class="gst-type-btn active" data-mode="add">Add Tax (Exclusive)</button>
+                <button type="button" id="gst-mode-remove" class="gst-type-btn" data-mode="remove">Remove Tax (Inclusive)</button>
               </div>
             </div>
 
-            <div class="fin-input-group">
-              <label>Tax Rate (%)</label>
-              <div class="gst-slabs">
-                <button type="button" class="gst-slab-btn" data-rate="5">5%</button>
-                <button type="button" class="gst-slab-btn" data-rate="12">12%</button>
-                <button type="button" class="gst-slab-btn active" data-rate="18">18%</button>
-                <button type="button" class="gst-slab-btn" data-rate="28">28%</button>
-              </div>
-              <div class="fin-input-wrap custom-rate-wrap">
-                <input type="number" id="gst-custom-rate" placeholder="Custom %" value="18" min="0" step="0.1" />
-                <span class="fin-suffix">%</span>
-              </div>
-            </div>
-
-            <div class="gst-type-toggle">
-              <button type="button" id="gst-mode-add" class="gst-type-btn active" data-mode="add">Add Tax (Exclusive)</button>
-              <button type="button" id="gst-mode-remove" class="gst-type-btn" data-mode="remove">Remove Tax (Inclusive)</button>
-            </div>
-
-            <!-- Results Card -->
-            <div class="fin-results-card">
-              <div class="fin-stat-item">
-                <span class="fin-stat-label">Net Amount</span>
-                <span id="gst-res-net" class="fin-stat-val">₹1,000.00</span>
-              </div>
-              <div class="fin-stat-item">
-                <span class="fin-stat-label">Tax Amount</span>
-                <span id="gst-res-tax" class="fin-stat-val">₹180.00</span>
-              </div>
-              <div class="fin-stat-item highlight total">
-                <span class="fin-stat-label">Total Amount</span>
-                <span id="gst-res-total" class="fin-stat-val">₹1,180.00</span>
+            <div class="fin-results-col">
+              <!-- Results Card -->
+              <div class="fin-results-card">
+                <div class="fin-stat-item">
+                  <span class="fin-stat-label">Net Amount</span>
+                  <span id="gst-res-net" class="fin-stat-val">₹1,000.00</span>
+                </div>
+                <div class="fin-stat-item">
+                  <span class="fin-stat-label">Tax Amount</span>
+                  <span id="gst-res-tax" class="fin-stat-val">₹180.00</span>
+                </div>
+                <div class="fin-stat-item highlight total">
+                  <span class="fin-stat-label">Total Amount</span>
+                  <span id="gst-res-total" class="fin-stat-val">₹1,180.00</span>
+                </div>
               </div>
             </div>
           </div>
