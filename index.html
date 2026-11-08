@@ -25,7 +25,10 @@
           </div>
         </div>
         <div class="header-actions">
-          <button id="history-toggle" aria-label="Calculation history" title="Calculation history">
+          <button id="shortcuts-toggle" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (Alt+?)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"/><line x1="6" y1="8" x2="6.01" y2="8"/><line x1="10" y1="8" x2="10.01" y2="8"/><line x1="14" y1="8" x2="14.01" y2="8"/><line x1="18" y1="8" x2="18.01" y2="8"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="10" y1="12" x2="10.01" y2="12"/><line x1="14" y1="12" x2="14.01" y2="12"/><line x1="18" y1="12" x2="18.01" y2="12"/><line x1="7" y1="16" x2="17" y2="16"/></svg>
+          </button>
+          <button id="history-toggle" aria-label="Calculation history" title="Calculation history (Alt+H)">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
           </button>
           <button id="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle theme">
@@ -41,30 +44,37 @@
         <button class="mode-item active" data-mode="standard" title="Standard Calculator (Alt+1)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="8.01" y2="10"/><line x1="12" y1="10" x2="12.01" y2="10"/><line x1="16" y1="10" x2="16.01" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/><line x1="8" y1="18" x2="8.01" y2="18"/><line x1="12" y1="18" x2="12.01" y2="18"/><line x1="16" y1="18" x2="16.01" y2="18"/></svg>
           <span>Standard</span>
+          <kbd class="shortcut-kbd">1</kbd>
         </button>
         <button class="mode-item" data-mode="scientific" title="Scientific Calculator (Alt+2)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h12"/><path d="M6 14h12"/><path d="M10 10l4-6"/><path d="M14 10l-4-6"/></svg>
           <span>Scientific</span>
+          <kbd class="shortcut-kbd">2</kbd>
         </button>
         <button class="mode-item" data-mode="programmer" title="Programmer Calculator (Alt+3)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           <span>Programmer</span>
+          <kbd class="shortcut-kbd">3</kbd>
         </button>
         <button class="mode-item" data-mode="financial" title="Financial Calculator (Alt+4)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           <span>Financial</span>
+          <kbd class="shortcut-kbd">4</kbd>
         </button>
         <button class="mode-item" data-mode="converter" title="Unit Converter (Alt+5)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 10 12 15 17 10"/><polyline points="17 14 12 9 7 14"/></svg>
           <span>Converter</span>
+          <kbd class="shortcut-kbd">5</kbd>
         </button>
         <button class="mode-item" data-mode="date" title="Date & Age Calculator (Alt+6)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <span>Date</span>
+          <kbd class="shortcut-kbd">6</kbd>
         </button>
         <button class="mode-item" data-mode="bmi" title="Health & BMI Calculator (Alt+7)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <span>BMI</span>
+          <kbd class="shortcut-kbd">7</kbd>
         </button>
       </nav>
 
@@ -805,6 +815,34 @@
 
       <!-- Clipboard Feedback Toast -->
       <div id="copy-toast" class="copy-toast-hidden">Copied to clipboard</div>
+
+      <!-- Keyboard Shortcuts Cheatsheet Modal -->
+      <div id="shortcuts-modal" class="shortcuts-modal modal-hidden" role="dialog" aria-modal="true" aria-labelledby="shortcuts-title">
+        <div class="shortcuts-modal-content">
+          <div class="shortcuts-modal-header">
+            <span id="shortcuts-title">Keyboard Shortcuts</span>
+            <button id="close-shortcuts-btn" aria-label="Close shortcuts cheatsheet">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="shortcuts-modal-body">
+            <div class="shortcut-group">
+              <span class="shortcut-group-title">General Navigation</span>
+              <div class="shortcut-row"><span>Switch Modes</span><span class="kbd-wrap"><kbd>Alt</kbd> + <kbd>1</kbd> - <kbd>7</kbd></span></div>
+              <div class="shortcut-row"><span>Toggle History Tape</span><span class="kbd-wrap"><kbd>Alt</kbd> + <kbd>H</kbd></span></div>
+              <div class="shortcut-row"><span>Shortcuts Help</span><span class="kbd-wrap"><kbd>Alt</kbd> + <kbd>/</kbd></span></div>
+              <div class="shortcut-row"><span>Close Drawers/Modals</span><span class="kbd-wrap"><kbd>Esc</kbd></span></div>
+            </div>
+            <div class="shortcut-group">
+              <span class="shortcut-group-title">Standard & Scientific</span>
+              <div class="shortcut-row"><span>Calculate Result</span><span class="kbd-wrap"><kbd>Enter</kbd> or <kbd>=</kbd></span></div>
+              <div class="shortcut-row"><span>Delete Last Digit</span><span class="kbd-wrap"><kbd>Backspace</kbd></span></div>
+              <div class="shortcut-row"><span>Clear All</span><span class="kbd-wrap"><kbd>Esc</kbd> or <kbd>Del</kbd></span></div>
+              <div class="shortcut-row"><span>Arithmetic Operators</span><span class="kbd-wrap"><kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> <kbd>%</kbd></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -269,7 +269,24 @@ window.addEventListener("keydown", (event) => {
     return;
   }
 
+  // Shortcuts help modal (Alt+/ or ?)
+  if ((altKey && key === "/") || (!altKey && !ctrlKey && key === "?")) {
+    if (event.target && (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA")) return;
+    event.preventDefault();
+    if (typeof shortcutsModal !== "undefined" && shortcutsModal && !shortcutsModal.classList.contains("modal-hidden")) {
+      closeShortcutsModal();
+    } else {
+      openShortcutsModal();
+    }
+    return;
+  }
+
   if (key === "Escape") {
+    if (typeof shortcutsModal !== "undefined" && shortcutsModal && !shortcutsModal.classList.contains("modal-hidden")) {
+      event.preventDefault();
+      closeShortcutsModal();
+      return;
+    }
     if (typeof historyDrawer !== "undefined" && historyDrawer && !historyDrawer.classList.contains("drawer-hidden")) {
       event.preventDefault();
       if (typeof closeHistoryDrawer === "function") closeHistoryDrawer();
@@ -370,6 +387,45 @@ const closeHistoryBtn = document.querySelector("#close-history-btn");
 const clearHistoryBtn = document.querySelector("#clear-history-btn");
 const historyEmptyState = document.querySelector("#history-empty");
 const historyList = document.querySelector("#history-list");
+
+// Keyboard Shortcuts Modal Elements & Handlers
+const shortcutsToggleBtn = document.querySelector("#shortcuts-toggle");
+const shortcutsModal = document.querySelector("#shortcuts-modal");
+const closeShortcutsBtn = document.querySelector("#close-shortcuts-btn");
+
+function openShortcutsModal() {
+  if (shortcutsModal) {
+    shortcutsModal.classList.remove("modal-hidden");
+  }
+}
+
+function closeShortcutsModal() {
+  if (shortcutsModal) {
+    shortcutsModal.classList.add("modal-hidden");
+  }
+}
+
+if (shortcutsToggleBtn) {
+  shortcutsToggleBtn.addEventListener("click", () => {
+    if (shortcutsModal && !shortcutsModal.classList.contains("modal-hidden")) {
+      closeShortcutsModal();
+    } else {
+      openShortcutsModal();
+    }
+  });
+}
+
+if (closeShortcutsBtn) {
+  closeShortcutsBtn.addEventListener("click", closeShortcutsModal);
+}
+
+if (shortcutsModal) {
+  shortcutsModal.addEventListener("click", (e) => {
+    if (e.target === shortcutsModal) {
+      closeShortcutsModal();
+    }
+  });
+}
 
 let calcHistory = [];
 try {

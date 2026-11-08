@@ -65,7 +65,10 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 
 * **Responsive Pro Studio Architecture**: Fluid, multi-tier layout automatically adapting between Mobile (< 640px), Tablet (640px - 1023px), Desktop Workstation (1024px - 1439px), and Ultra-wide (>= 1440px).
 * **Desktop Mode Navigation Bar**: Direct-access horizontal pill navigation strip on screens >= 1024px with keyboard shortcuts (`Alt+1` through `Alt+7`).
+* **Split-Pane Master-Detail Views**: Dedicated 2-column layouts for Financial (EMI, SIP, GST), Date Interval analytics, and BMI health dashboard on desktop viewports.
+* **Unit Converter Horizontal Bridge**: Bidirectional conversion bridge with centered unit swap mechanics.
 * **Dockable Calculation History Tape**: On desktop viewports, calculation history transitions into an ergonomic docked right-hand sidebar alongside the active calculator with real-time updates and one-click recall; togglable via `Alt+H` or the history icon with state persistence in `localStorage`.
+* **Keyboard Shortcuts Cheatsheet & Badges**: Interactive shortcuts dialog accessible via `Alt+?` or header button, paired with inline shortcut badges across mode tabs.
 * **Fluid Typography & Sizing**: Built using modern CSS `clamp()` functions for seamless readability and touch/click ergonomics across all display densities.
 * **One-Click Clipboard Copying**: Quick copy button on displays with animated floating toast notification feedback.
 * **Theme Switching**: Dark and Light themes with dynamic CSS variables and state persistence via `localStorage`.

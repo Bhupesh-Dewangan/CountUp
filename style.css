@@ -1779,6 +1779,160 @@ button.pressed {
   transform: translateX(-50%) translateY(12px);
 }
 
+/* Shortcut Keys Badge */
+.shortcut-kbd {
+  display: none;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  background: var(--display-bg);
+  border: 1px solid var(--toggle-bg);
+  border-radius: 4px;
+  margin-left: 0.35rem;
+  opacity: 0.8;
+  font-family: inherit;
+  color: var(--sub-display-text);
+}
+
+#shortcuts-toggle {
+  display: none;
+  background: var(--toggle-bg);
+  border: none;
+  border-radius: 50%;
+  width: 2.3rem;
+  height: 2.3rem;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--btn-text);
+  box-shadow: 0 2px 6px var(--shadow-color);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#shortcuts-toggle:hover {
+  transform: scale(1.08);
+}
+
+#shortcuts-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Keyboard Shortcuts Modal */
+.shortcuts-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.shortcuts-modal.modal-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.shortcuts-modal-content {
+  background: var(--box-bg);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px var(--shadow-color);
+  width: 90%;
+  max-width: 26rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  border: 1px solid var(--toggle-bg);
+  transform: translateY(0);
+  transition: transform 0.25s ease;
+}
+
+.shortcuts-modal.modal-hidden .shortcuts-modal-content {
+  transform: translateY(15px);
+}
+
+.shortcuts-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--display-text);
+}
+
+#close-shortcuts-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--sub-display-text);
+  padding: 0.2rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+#close-shortcuts-btn:hover {
+  color: var(--display-text);
+}
+
+.shortcuts-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.shortcut-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shortcut-group-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--operator-bg);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.shortcut-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  color: var(--btn-text);
+}
+
+.kbd-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  color: var(--sub-display-text);
+}
+
+.kbd-wrap kbd {
+  background: var(--display-bg);
+  border: 1px solid var(--toggle-bg);
+  border-radius: 4px;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--display-text);
+  box-shadow: 0 1px 2px var(--shadow-color);
+}
+
 /* ============================================================
    RESPONSIVE BREAKPOINT SYSTEM
    ============================================================ */
@@ -1812,6 +1966,14 @@ button.pressed {
 
   #menu-toggle {
     display: none;
+  }
+
+  #shortcuts-toggle {
+    display: flex;
+  }
+
+  .shortcut-kbd {
+    display: inline-block;
   }
 
   /* Desktop Mode Navigation Bar */
