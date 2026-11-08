@@ -488,28 +488,30 @@
 
           <!-- Converter Card -->
           <div class="conv-card">
-            <!-- Source Unit -->
-            <div class="conv-unit-block">
-              <label for="conv-from-val">From</label>
-              <div class="conv-input-row">
-                <input type="number" id="conv-from-val" value="1" placeholder="0" />
-                <select id="conv-from-unit" class="conv-select" aria-label="From Unit"></select>
+            <div class="conv-bridge-row">
+              <!-- Source Unit -->
+              <div class="conv-unit-block">
+                <label for="conv-from-val">From</label>
+                <div class="conv-input-row">
+                  <input type="number" id="conv-from-val" value="1" placeholder="0" />
+                  <select id="conv-from-unit" class="conv-select" aria-label="From Unit"></select>
+                </div>
               </div>
-            </div>
 
-            <!-- Swap Button -->
-            <div class="conv-swap-row">
-              <button type="button" id="conv-swap-btn" title="Swap units" aria-label="Swap units">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 10 12 15 17 10"/><polyline points="17 14 12 9 7 14"/></svg>
-              </button>
-            </div>
+              <!-- Swap Button -->
+              <div class="conv-swap-row">
+                <button type="button" id="conv-swap-btn" title="Swap units" aria-label="Swap units">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 10 12 15 17 10"/><polyline points="17 14 12 9 7 14"/></svg>
+                </button>
+              </div>
 
-            <!-- Target Unit -->
-            <div class="conv-unit-block">
-              <label for="conv-to-val">To</label>
-              <div class="conv-input-row">
-                <input type="number" id="conv-to-val" value="" placeholder="0" />
-                <select id="conv-to-unit" class="conv-select" aria-label="To Unit"></select>
+              <!-- Target Unit -->
+              <div class="conv-unit-block">
+                <label for="conv-to-val">To</label>
+                <div class="conv-input-row">
+                  <input type="number" id="conv-to-val" value="" placeholder="0" />
+                  <select id="conv-to-unit" class="conv-select" aria-label="To Unit"></select>
+                </div>
               </div>
             </div>
 

@@ -949,6 +949,13 @@ button.pressed {
   gap: 0.6rem;
 }
 
+.conv-bridge-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
 .conv-unit-block {
   width: 100%;
   display: flex;
@@ -1927,6 +1934,32 @@ button.pressed {
     padding: 1.2rem 1.4rem;
     gap: 1rem;
     justify-content: space-evenly;
+  }
+
+  /* Unit Converter Horizontal Bridge Layout */
+  .conv-bridge-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .conv-bridge-row .conv-unit-block {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .conv-bridge-row .conv-swap-row {
+    width: auto;
+    margin: 1.2rem 0 0 0;
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  .conv-card .conv-formula-card {
+    margin-top: 1rem;
+    padding: 1rem 1.25rem;
+    align-items: center;
+    text-align: center;
   }
 }
 
