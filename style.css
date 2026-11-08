@@ -2099,6 +2099,61 @@ button.pressed {
     transform: translateY(1px);
     box-shadow: 0 1px 3px var(--shadow-color);
   }
+
+  /* Programmer Mode Desktop Optimization */
+  #prog-base-monitor {
+    gap: 0.4rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .base-row {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+
+  .base-row.active {
+    border-left: 4px solid var(--operator-bg);
+    box-shadow: 0 2px 8px var(--shadow-color);
+  }
+
+  .base-val {
+    font-size: 0.98rem;
+    font-family: 'Consolas', 'Cascadia Code', 'Fira Code', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .word-size-row {
+    margin-bottom: 0.75rem;
+  }
+
+  .word-toggle {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.86rem;
+    border-radius: 8px;
+  }
+
+  .prog-grid {
+    gap: 0.55rem;
+  }
+
+  .prog-grid button {
+    padding: 0.82rem 0.5rem;
+    font-size: 1.02rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+  }
+
+  .prog-grid button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+  }
+
+  .prog-grid button:active,
+  .prog-grid button.pressed {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px var(--shadow-color);
+  }
 }
 
 /* Ultra-wide & 4K (min-width: 1440px) */
