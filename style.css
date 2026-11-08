@@ -2044,6 +2044,61 @@ button.pressed {
     gap: 1rem;
     justify-content: space-evenly;
   }
+
+  /* Desktop Keypad Ergonomics */
+  #in-btn {
+    gap: 0.65rem;
+  }
+
+  #in-btn button {
+    padding: 0.95rem 0.5rem;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 5px var(--shadow-color);
+  }
+
+  #in-btn button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+  }
+
+  #in-btn button:active,
+  #in-btn button.pressed {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px var(--shadow-color);
+  }
+
+  .sci-func-bar {
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .sci-func-pill {
+    padding: 0.55rem 0.6rem;
+    font-size: 0.85rem;
+    border-radius: 9px;
+  }
+
+  .sci-grid {
+    gap: 0.55rem;
+  }
+
+  .sci-grid button {
+    padding: 0.82rem 0.5rem;
+    font-size: 1.02rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+  }
+
+  .sci-grid button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+  }
+
+  .sci-grid button:active,
+  .sci-grid button.pressed {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px var(--shadow-color);
+  }
 }
 
 /* Ultra-wide & 4K (min-width: 1440px) */
