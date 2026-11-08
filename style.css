@@ -1117,6 +1117,14 @@ button.pressed {
   display: flex;
 }
 
+.date-inputs-col,
+.date-results-col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
 .date-input-group {
   width: 100%;
   display: flex;
@@ -1305,6 +1313,21 @@ button.pressed {
 }
 
 /* Health & Fitness (BMI) Calculator Styles */
+.bmi-workspace-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.bmi-inputs-col,
+.bmi-results-col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
 .bmi-unit-toggle {
   width: 100%;
   display: flex;
@@ -1960,6 +1983,66 @@ button.pressed {
     padding: 1rem 1.25rem;
     align-items: center;
     text-align: center;
+  }
+
+  /* Date Split-Pane 2-Column Grid */
+  .date-subtab-panel.active-subtab {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 1.5rem;
+    align-items: start;
+    width: 100%;
+  }
+
+  .date-inputs-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .date-results-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  .date-results-col .date-results-card {
+    height: 100%;
+    margin-top: 0;
+    padding: 1.2rem 1.4rem;
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+
+  /* BMI Split-Pane 2-Column Grid */
+  .bmi-workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .bmi-inputs-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .bmi-results-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  .bmi-results-col .bmi-results-card {
+    height: 100%;
+    margin-top: 0;
+    padding: 1.2rem 1.4rem;
+    gap: 1rem;
+    justify-content: space-evenly;
   }
 }
 
