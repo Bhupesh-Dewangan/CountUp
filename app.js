@@ -1416,6 +1416,23 @@ const unitDefinitions = {
       Knot: 0.514444,
     },
   },
+  volume: {
+    name: "Volume",
+    defaultFrom: "Liter",
+    defaultTo: "Gallon (US)",
+    units: {
+      Liter: 1,
+      Milliliter: 0.001,
+      "Cubic Meter": 1000,
+      "Gallon (US)": 3.785411784,
+      "Quart (US)": 0.946352946,
+      "Pint (US)": 0.473176473,
+      "Cup (US)": 0.2365882365,
+      "Fluid Ounce (US)": 0.0295735295625,
+      "Tablespoon (US)": 0.01478676478125,
+      "Teaspoon (US)": 0.00492892159375,
+    },
+  },
 };
 
 function convertUnits(cat, val, fromU, toU) {
