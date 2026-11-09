@@ -1727,3 +1727,60 @@ button.pressed {
   opacity: 0;
   transform: translateX(-50%) translateY(12px);
 }
+
+/* ============================================================
+   RESPONSIVE BREAKPOINT SYSTEM
+   ============================================================ */
+
+/* Tablet & Phablet (min-width: 640px) */
+@media (min-width: 640px) {
+  #app-container {
+    padding: 1.5rem;
+  }
+
+  #box {
+    max-width: 26rem;
+  }
+
+  #box.scientific-mode,
+  #box.programmer-mode,
+  #box.financial-mode,
+  #box.converter-mode,
+  #box.date-mode,
+  #box.bmi-mode {
+    max-width: 32rem;
+  }
+}
+
+/* Desktop & Laptop (min-width: 1024px) */
+@media (min-width: 1024px) {
+  #app-container {
+    padding: 2rem 2.5rem;
+    max-width: var(--app-max-width);
+  }
+
+  #box {
+    max-width: 28rem;
+    box-shadow: 0 16px 40px var(--shadow-color);
+  }
+
+  #box.scientific-mode,
+  #box.programmer-mode,
+  #box.financial-mode,
+  #box.converter-mode,
+  #box.date-mode,
+  #box.bmi-mode {
+    max-width: 38rem;
+  }
+}
+
+/* Ultra-wide & 4K (min-width: 1440px) */
+@media (min-width: 1440px) {
+  #app-container {
+    padding: 3rem 4rem;
+  }
+
+  #box {
+    box-shadow: 0 20px 50px var(--shadow-color);
+  }
+}
