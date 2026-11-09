@@ -15,8 +15,9 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 
 ### 2. Scientific Calculator
 * **Trigonometric Functions**: Sine (`sin`), Cosine (`cos`), and Tangent (`tan`) with instantaneous Degree (`DEG`) and Radian (`RAD`) mode switching.
-* **Logarithms & Exponentials**: Natural logarithm (`ln`), base-10 logarithm (`log`), powers (`x^y`), square roots (`sqrt`), and factorials (`n!`).
-* **Mathematical Constants**: Precise representations of Pi (`π`) and Euler's Number (`e`).
+* **Secondary & Hyperbolic Modes**: Toggle `2nd` for inverse trigonometric functions (`asin`, `acos`, `atan`) and cube root (`cbrt`); toggle `hyp` for hyperbolic functions (`sinh`, `cosh`, `tanh`).
+* **Combinatorics & Factorials**: Permutations (`nPr`), Combinations (`nCr`), and factorials (`n!`).
+* **Logarithms & Exponentials**: Natural logarithm (`ln`), base-10 logarithm (`log`), powers (`x^y`), square roots (`sqrt`), and constants ($\pi$, $e$).
 * **Parenthesis Expression Hierarchy**: Balanced bracket evaluation with automatic syntax closure upon evaluation.
 * **History Recall**: Dedicated `Ans` register to reuse the last computed result across operations.
 
@@ -33,9 +34,10 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 * **GST & Sales Tax**: Inclusive and Exclusive tax calculation with instant percentage presets (`5%`, `12%`, `18%`, `28%`) and custom rates.
 
 ### 5. Unit & Measurement Converter
-* **Multi-Category Coverage**: Instant conversion across 5 primary measurement domains:
+* **Multi-Category Coverage**: Instant conversion across 6 primary measurement domains:
   * **Length**: Millimeter, Centimeter, Meter, Kilometer, Inch, Foot, Yard, Mile.
   * **Mass / Weight**: Milligram, Gram, Kilogram, Metric Ton, Ounce, Pound.
+  * **Volume**: Liter, Milliliter, Cubic Meter, Gallon, Quart, Pint, Cup, Fluid Ounce.
   * **Temperature**: Celsius, Fahrenheit, Kelvin (with exact affine formulas).
   * **Digital Data**: Byte, Kilobyte, Megabyte, Gigabyte, Terabyte, Petabyte (base 1024).
   * **Speed**: Meters per second, Kilometers per hour, Miles per hour, Knots.
@@ -46,7 +48,7 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 ### 6. Date & Age Calculator
 * **Chronological Age Calculator**: Exact chronological age breakdown in Years, Months, and Days, alongside cumulative statistics (total months, weeks, calendar days).
 * **Next Birthday Countdown**: Days remaining until the next anniversary with day-of-week projection.
-* **Date Difference Engine**: Accurate calendar duration measurement between any two points in time.
+* **Date Difference Engine**: Accurate calendar duration measurement between any two points in time, including Calendar Days, Weeks, Business Days (excluding weekends), and Weekend Days.
 * **Duration Projector**: Add or subtract customizable years, months, and days from any date with automatic month-end and leap-year clamping.
 
 ### 7. Health & Fitness (BMI) Calculator
@@ -61,6 +63,8 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 ## User Interface & Design System
 
 * **Navigation Drawer**: Smooth slide-out menu with high-contrast active route tracking.
+* **Calculation History Tape**: Dedicated history drawer storing calculation logs with one-click restoration into the active calculator register.
+* **One-Click Clipboard Copying**: Quick copy button on displays with animated floating toast notification feedback.
 * **Theme Switching**: Dark and Light themes with dynamic CSS variables and state persistence via `localStorage`.
 * **Zero Emojis**: 100% stroke-based SVG vector icons for a consistent, professional design language.
 * **Responsive Layouts**: Dynamic box container width scaling smoothly across standard (`20rem`) and extended multi-column modes (`24rem`).
