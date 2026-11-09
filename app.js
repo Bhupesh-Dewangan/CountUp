@@ -74,6 +74,9 @@ function handleInput(value) {
     if (subDisplay && exprForSub) {
       subDisplay.textContent = `${exprForSub} =`;
     }
+    if (typeof addHistoryEntry === "function") {
+      addHistoryEntry("Standard", exprForSub, result);
+    }
     currentInput = result;
     isEvaluated = true;
     display.value = currentInput;
@@ -239,10 +242,17 @@ function findButtonForKey(key) {
 window.addEventListener("keydown", (event) => {
   const { key } = event;
 
-  if (key === "Escape" && navDrawer && !navDrawer.classList.contains("drawer-hidden")) {
-    event.preventDefault();
-    closeDrawer();
-    return;
+  if (key === "Escape") {
+    if (typeof historyDrawer !== "undefined" && historyDrawer && !historyDrawer.classList.contains("drawer-hidden")) {
+      event.preventDefault();
+      if (typeof closeHistoryDrawer === "function") closeHistoryDrawer();
+      return;
+    }
+    if (navDrawer && !navDrawer.classList.contains("drawer-hidden")) {
+      event.preventDefault();
+      closeDrawer();
+      return;
+    }
   }
 
   if (
@@ -315,8 +325,25 @@ const drawerBackdrop = document.querySelector("#drawer-backdrop");
 const modeItems = document.querySelectorAll(".mode-item");
 const modeBadge = document.querySelector("#mode-badge");
 
+// Calculation History Elements & State
+const historyToggleBtn = document.querySelector("#history-toggle");
+const historyDrawer = document.querySelector("#history-drawer");
+const closeHistoryBtn = document.querySelector("#close-history-btn");
+const clearHistoryBtn = document.querySelector("#clear-history-btn");
+const historyEmptyState = document.querySelector("#history-empty");
+const historyList = document.querySelector("#history-list");
+
+let calcHistory = [];
+try {
+  const savedHistory = localStorage.getItem("countup_history");
+  if (savedHistory) calcHistory = JSON.parse(savedHistory);
+} catch (e) {
+  calcHistory = [];
+}
+
 function openDrawer() {
   if (navDrawer && drawerBackdrop) {
+    closeHistoryDrawer();
     navDrawer.classList.remove("drawer-hidden");
     drawerBackdrop.classList.remove("backdrop-hidden");
   }
@@ -325,13 +352,136 @@ function openDrawer() {
 function closeDrawer() {
   if (navDrawer && drawerBackdrop) {
     navDrawer.classList.add("drawer-hidden");
-    drawerBackdrop.classList.add("backdrop-hidden");
+    if (!historyDrawer || historyDrawer.classList.contains("drawer-hidden")) {
+      drawerBackdrop.classList.add("backdrop-hidden");
+    }
   }
+}
+
+function openHistoryDrawer() {
+  if (historyDrawer && drawerBackdrop) {
+    closeDrawer();
+    historyDrawer.classList.remove("drawer-hidden");
+    drawerBackdrop.classList.remove("backdrop-hidden");
+    renderHistoryList();
+  }
+}
+
+function closeHistoryDrawer() {
+  if (historyDrawer && drawerBackdrop) {
+    historyDrawer.classList.add("drawer-hidden");
+    if (!navDrawer || navDrawer.classList.contains("drawer-hidden")) {
+      drawerBackdrop.classList.add("backdrop-hidden");
+    }
+  }
+}
+
+function addHistoryEntry(mode, expression, result) {
+  if (!expression || !result || result === "Error" || result === "Cannot divide by zero") return;
+  const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  const entry = {
+    id: Date.now() + Math.random(),
+    mode,
+    expression,
+    result,
+    time: timeStr
+  };
+  calcHistory.unshift(entry);
+  if (calcHistory.length > 50) calcHistory.pop();
+  try {
+    localStorage.setItem("countup_history", JSON.stringify(calcHistory));
+  } catch (e) {}
+  renderHistoryList();
+}
+
+function renderHistoryList() {
+  if (!historyList || !historyEmptyState) return;
+
+  if (calcHistory.length === 0) {
+    historyEmptyState.style.display = "flex";
+    historyList.innerHTML = "";
+    return;
+  }
+
+  historyEmptyState.style.display = "none";
+  historyList.innerHTML = "";
+
+  calcHistory.forEach((item) => {
+    const li = document.createElement("li");
+    li.className = "history-item";
+    li.title = "Click to recall into calculator";
+    li.innerHTML = `
+      <div class="history-item-top">
+        <span class="history-item-mode">${item.mode}</span>
+        <span class="history-item-time">${item.time}</span>
+      </div>
+      <div class="history-item-expr">${item.expression} =</div>
+      <div class="history-item-result">${item.result}</div>
+    `;
+
+    li.addEventListener("click", () => {
+      recallHistoryItem(item);
+    });
+
+    historyList.appendChild(li);
+  });
+}
+
+function recallHistoryItem(item) {
+  if (item.mode === "Standard") {
+    switchMode("standard");
+    currentInput = item.result;
+    isEvaluated = true;
+    if (display) display.value = currentInput;
+    if (subDisplay) subDisplay.textContent = `${item.expression} =`;
+  } else if (item.mode === "Scientific") {
+    switchMode("scientific");
+    sciCurrentInput = item.result;
+    sciLastAns = item.result;
+    sciIsEvaluated = true;
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    if (sciSubDisplay) sciSubDisplay.textContent = `${item.expression} =`;
+  } else if (item.mode.startsWith("Programmer")) {
+    switchMode("programmer");
+    progCurrentInput = item.result;
+    progLastAns = item.result;
+    progIsEvaluated = true;
+    if (progDisplay) progDisplay.value = progCurrentInput;
+    if (progSubDisplay) progSubDisplay.textContent = `${item.expression} =`;
+    try {
+      let n;
+      if (progCurrentBase === "HEX") n = BigInt("0x" + item.result);
+      else if (progCurrentBase === "OCT") n = BigInt("0o" + item.result);
+      else if (progCurrentBase === "BIN") n = BigInt("0b" + item.result);
+      else n = BigInt(item.result);
+      updateBaseMonitor(n);
+    } catch (e) {}
+  }
+  closeHistoryDrawer();
 }
 
 if (menuToggleBtn) menuToggleBtn.addEventListener("click", openDrawer);
 if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeDrawer);
-if (drawerBackdrop) drawerBackdrop.addEventListener("click", closeDrawer);
+if (historyToggleBtn) historyToggleBtn.addEventListener("click", openHistoryDrawer);
+if (closeHistoryBtn) closeHistoryBtn.addEventListener("click", closeHistoryDrawer);
+if (clearHistoryBtn) {
+  clearHistoryBtn.addEventListener("click", () => {
+    calcHistory = [];
+    try {
+      localStorage.removeItem("countup_history");
+    } catch (e) {}
+    renderHistoryList();
+  });
+}
+if (drawerBackdrop) {
+  drawerBackdrop.addEventListener("click", () => {
+    closeDrawer();
+    closeHistoryDrawer();
+  });
+}
+
+// Initial history render
+renderHistoryList();
 
 function switchMode(modeName) {
   modeItems.forEach((item) => {
@@ -489,6 +639,9 @@ function handleSciInput(btn) {
     const exprForSub = autoCloseParens(sciCurrentInput);
     const result = evaluateSciExpression(sciCurrentInput, sciAngleMode);
     if (sciSubDisplay) sciSubDisplay.textContent = `${exprForSub} =`;
+    if (typeof addHistoryEntry === "function") {
+      addHistoryEntry("Scientific", exprForSub, result);
+    }
     sciCurrentInput = result;
     if (result !== "Error" && result !== "Cannot divide by zero") {
       sciLastAns = result;
@@ -864,6 +1017,9 @@ function handleProgInput(btn) {
     const exprForSub = autoCloseParens(progCurrentInput);
     const result = evaluateProgExpression(progCurrentInput, progCurrentBase, progWordSize);
     if (progSubDisplay) progSubDisplay.textContent = `${exprForSub} =`;
+    if (typeof addHistoryEntry === "function") {
+      addHistoryEntry("Programmer", `${exprForSub} (${progCurrentBase})`, result);
+    }
     progCurrentInput = result;
     if (result !== "Error") {
       progLastAns = result;
