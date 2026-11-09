@@ -1,4 +1,7 @@
-const display = document.querySelector("#show");
+(() => {
+  "use strict";
+
+  const display = document.querySelector("#show");
 const subDisplay = document.querySelector("#sub-display");
 const buttons = document.querySelectorAll("#in-btn button");
 
@@ -1852,3 +1855,4 @@ if (bmiCalcBtn) bmiCalcBtn.addEventListener("click", runBmiCalculation);
 
 // Initialize BMI Calculation
 runBmiCalculation();
+})();
