@@ -359,19 +359,51 @@ function closeDrawer() {
 }
 
 function openHistoryDrawer() {
-  if (historyDrawer && drawerBackdrop) {
+  if (historyDrawer) {
     closeDrawer();
     historyDrawer.classList.remove("drawer-hidden");
-    drawerBackdrop.classList.remove("backdrop-hidden");
+    if (drawerBackdrop && window.innerWidth < 1024) {
+      drawerBackdrop.classList.remove("backdrop-hidden");
+    }
+    const box = document.querySelector("#box");
+    if (box) box.classList.add("history-docked");
+    if (historyToggleBtn) historyToggleBtn.classList.add("active");
+    if (window.innerWidth >= 1024) {
+      try { localStorage.setItem("countup_desktop_history_open", "true"); } catch (e) {}
+    }
     renderHistoryList();
   }
 }
 
 function closeHistoryDrawer() {
-  if (historyDrawer && drawerBackdrop) {
+  if (historyDrawer) {
     historyDrawer.classList.add("drawer-hidden");
-    if (!navDrawer || navDrawer.classList.contains("drawer-hidden")) {
+    if (drawerBackdrop && (!navDrawer || navDrawer.classList.contains("drawer-hidden"))) {
       drawerBackdrop.classList.add("backdrop-hidden");
+    }
+    const box = document.querySelector("#box");
+    if (box) box.classList.remove("history-docked");
+    if (historyToggleBtn) historyToggleBtn.classList.remove("active");
+    if (window.innerWidth >= 1024) {
+      try { localStorage.setItem("countup_desktop_history_open", "false"); } catch (e) {}
+    }
+  }
+}
+
+function toggleHistoryDrawer() {
+  const box = document.querySelector("#box");
+  const isDesktop = window.innerWidth >= 1024;
+  if (isDesktop) {
+    if (box && box.classList.contains("history-docked")) {
+      closeHistoryDrawer();
+    } else {
+      openHistoryDrawer();
+    }
+  } else {
+    if (historyDrawer && !historyDrawer.classList.contains("drawer-hidden")) {
+      closeHistoryDrawer();
+    } else {
+      openHistoryDrawer();
     }
   }
 }
@@ -457,12 +489,14 @@ function recallHistoryItem(item) {
       updateBaseMonitor(n);
     } catch (e) {}
   }
-  closeHistoryDrawer();
+  if (window.innerWidth < 1024) {
+    closeHistoryDrawer();
+  }
 }
 
 if (menuToggleBtn) menuToggleBtn.addEventListener("click", openDrawer);
 if (closeDrawerBtn) closeDrawerBtn.addEventListener("click", closeDrawer);
-if (historyToggleBtn) historyToggleBtn.addEventListener("click", openHistoryDrawer);
+if (historyToggleBtn) historyToggleBtn.addEventListener("click", toggleHistoryDrawer);
 if (closeHistoryBtn) closeHistoryBtn.addEventListener("click", closeHistoryDrawer);
 if (clearHistoryBtn) {
   clearHistoryBtn.addEventListener("click", () => {
@@ -482,6 +516,14 @@ if (drawerBackdrop) {
 
 // Initial history render
 renderHistoryList();
+
+// Initialize desktop history docked state
+if (window.innerWidth >= 1024) {
+  const desktopHistoryPref = localStorage.getItem("countup_desktop_history_open");
+  if (desktopHistoryPref !== "false") {
+    openHistoryDrawer();
+  }
+}
 
 function switchMode(modeName) {
   modeItems.forEach((item) => {
