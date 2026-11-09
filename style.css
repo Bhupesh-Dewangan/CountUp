@@ -24,6 +24,17 @@
   --brand-color: #ff8c42;
   --toggle-bg: #e6e6e6;
   --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Fluid layout and typography variables */
+  --app-max-width: 1200px;
+  --box-padding: clamp(1rem, 2vw, 1.8rem);
+  --box-radius: clamp(16px, 1.8vw, 24px);
+  --display-main-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  --display-sub-size: clamp(0.85rem, 1.2vw, 1.05rem);
+  --btn-font-size: clamp(1rem, 1.3vw, 1.25rem);
+  --btn-padding: clamp(0.7rem, 1.1vw, 1rem);
+  --btn-radius: clamp(8px, 1vw, 12px);
+  --gap-size: clamp(0.4rem, 0.7vw, 0.65rem);
 }
 
 body.dark-theme {
@@ -77,15 +88,15 @@ body {
   position: relative;
   overflow: hidden;
   background: var(--box-bg);
-  border-radius: 20px;
+  border-radius: var(--box-radius);
   box-shadow: var(--box-shadow);
-  padding: 1.5rem;
+  padding: var(--box-padding);
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   max-width: 22rem;
-  transition: background 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, max-width 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, max-width 0.3s ease, padding 0.3s ease;
 }
 
 #box.scientific-mode,
@@ -359,27 +370,28 @@ body {
   flex: 1;
   min-height: 1.2rem;
   text-align: right;
-  font-size: 0.9rem;
+  font-size: var(--display-sub-size);
   color: var(--sub-display-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, font-size 0.2s ease;
 }
 
 #show,
 .calc-main-show {
   width: 100%;
-  height: 2.3rem;
+  min-height: 2.3rem;
+  height: auto;
   text-align: right;
-  font-size: 1.7rem;
+  font-size: var(--display-main-size);
   border: none;
   background: transparent;
   outline: none;
   color: var(--display-text);
   font-family: inherit;
   font-weight: 600;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, font-size 0.2s ease;
 }
 
 /* Scientific Function Secondary Bar */
@@ -595,15 +607,15 @@ body {
 #in-btn {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
+  gap: var(--gap-size);
   width: 100%;
 }
 
 button {
-  padding: 0.85rem;
-  font-size: 1.15rem;
+  padding: var(--btn-padding);
+  font-size: var(--btn-font-size);
   border: none;
-  border-radius: 10px;
+  border-radius: var(--btn-radius);
   background: var(--btn-bg);
   color: var(--btn-text);
   cursor: pointer;
