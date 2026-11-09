@@ -117,7 +117,12 @@
         <!-- Standard Mode View -->
         <div id="standard-view" class="mode-view active-view">
           <div id="display-container">
-            <div id="sub-display"></div>
+            <div class="display-top-row">
+              <div id="sub-display"></div>
+              <button type="button" class="copy-display-btn" data-target="show" aria-label="Copy result" title="Copy to clipboard">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
             <input type="text" id="show" readonly placeholder="0" />
           </div>
           <div id="in-btn">
@@ -151,7 +156,12 @@
         <!-- Scientific Mode View -->
         <div id="scientific-view" class="mode-view">
           <div id="sci-display-container" class="calc-display-container">
-            <div id="sci-sub-display" class="calc-sub-display"></div>
+            <div class="display-top-row">
+              <div id="sci-sub-display" class="calc-sub-display"></div>
+              <button type="button" class="copy-display-btn" data-target="sci-show" aria-label="Copy result" title="Copy to clipboard">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
             <input type="text" id="sci-show" class="calc-main-show" readonly placeholder="0" />
           </div>
           <div id="sci-btn" class="sci-grid">
@@ -202,7 +212,12 @@
         <!-- Programmer Mode View -->
         <div id="programmer-view" class="mode-view">
           <div id="prog-display-container" class="calc-display-container">
-            <div id="prog-sub-display" class="calc-sub-display"></div>
+            <div class="display-top-row">
+              <div id="prog-sub-display" class="calc-sub-display"></div>
+              <button type="button" class="copy-display-btn" data-target="prog-show" aria-label="Copy result" title="Copy to clipboard">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
             <input type="text" id="prog-show" class="calc-main-show" readonly placeholder="0" />
           </div>
 
@@ -700,6 +715,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Clipboard Feedback Toast -->
+      <div id="copy-toast" class="copy-toast-hidden">Copied to clipboard</div>
     </div>
   </div>
 
