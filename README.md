@@ -29,6 +29,7 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 * **Dynamic Hex Keypad**: Context-aware enabling/disabling of hexadecimal keys (`A-F`) and numerals (`2-9`) based on the active base system.
 
 ### 4. Financial & Loan Calculator
+* **Indian Rupee (₹) Locale**: All computations and monetary cards formatted with the Indian Rupee symbol (`₹`) and `en-IN` numbering system (lakhs and crores).
 * **Loan / Mortgage EMI**: Equated Monthly Installment calculator with total interest and total repayment schedules.
 * **SIP & Compound Wealth**: Systematic Investment Plan calculator projecting total investment, estimated returns, and total maturity wealth with annualized compounding.
 * **GST & Sales Tax**: Inclusive and Exclusive tax calculation with instant percentage presets (`5%`, `12%`, `18%`, `28%`) and custom rates.

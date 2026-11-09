@@ -1284,10 +1284,10 @@ if (finTabBtns) {
 }
 
 function formatCurrency(val) {
-  if (isNaN(val) || !isFinite(val)) return "$0.00";
+  if (isNaN(val) || !isFinite(val)) return "₹0.00";
   return (
-    "$" +
-    Number(val).toLocaleString("en-US", {
+    "₹" +
+    Number(val).toLocaleString("en-IN", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })
@@ -1310,9 +1310,9 @@ function calculateEMI() {
   const years = parseFloat(emiTenureInput?.value) || 0;
 
   if (P <= 0 || years <= 0) {
-    if (emiMonthlyEl) emiMonthlyEl.textContent = "$0.00";
+    if (emiMonthlyEl) emiMonthlyEl.textContent = "₹0.00";
     if (emiPrincipalEl) emiPrincipalEl.textContent = formatCurrency(P);
-    if (emiInterestEl) emiInterestEl.textContent = "$0.00";
+    if (emiInterestEl) emiInterestEl.textContent = "₹0.00";
     if (emiTotalEl) emiTotalEl.textContent = formatCurrency(P);
     return;
   }
@@ -1359,9 +1359,9 @@ function calculateSIP() {
   const years = parseFloat(sipYearsInput?.value) || 0;
 
   if (monthly <= 0 || years <= 0) {
-    if (sipMaturityEl) sipMaturityEl.textContent = "$0.00";
-    if (sipInvestedEl) sipInvestedEl.textContent = "$0.00";
-    if (sipReturnsEl) sipReturnsEl.textContent = "$0.00";
+    if (sipMaturityEl) sipMaturityEl.textContent = "₹0.00";
+    if (sipInvestedEl) sipInvestedEl.textContent = "₹0.00";
+    if (sipReturnsEl) sipReturnsEl.textContent = "₹0.00";
     return;
   }
 
