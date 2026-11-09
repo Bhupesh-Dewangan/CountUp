@@ -25,6 +25,9 @@
           </div>
         </div>
         <div class="header-actions">
+          <button id="history-toggle" aria-label="Calculation history" title="Calculation history">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+          </button>
           <button id="theme-toggle" aria-label="Toggle dark/light theme" title="Toggle theme">
             <span class="theme-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -85,6 +88,27 @@
             </button>
           </li>
         </ul>
+      </div>
+
+      <!-- History Drawer Overlay -->
+      <div id="history-drawer" class="drawer-hidden">
+        <div class="drawer-header">
+          <span>Calculation History</span>
+          <div class="history-header-actions">
+            <button id="clear-history-btn" aria-label="Clear history" title="Clear history">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+            <button id="close-history-btn" aria-label="Close history">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+        <div id="history-container">
+          <div id="history-empty" class="history-empty-state">
+            <span>No calculations yet</span>
+          </div>
+          <ul id="history-list" class="history-list"></ul>
+        </div>
       </div>
       <div id="drawer-backdrop" class="backdrop-hidden"></div>
 
