@@ -240,7 +240,34 @@ function findButtonForKey(key) {
 }
 
 window.addEventListener("keydown", (event) => {
-  const { key } = event;
+  const { key, altKey, ctrlKey } = event;
+
+  // Global mode shortcuts (Alt+1 to Alt+7)
+  if (altKey && !ctrlKey && key >= "1" && key <= "7") {
+    event.preventDefault();
+    const modeMap = {
+      "1": "standard",
+      "2": "scientific",
+      "3": "programmer",
+      "4": "financial",
+      "5": "converter",
+      "6": "date",
+      "7": "bmi",
+    };
+    if (modeMap[key]) {
+      switchMode(modeMap[key]);
+    }
+    return;
+  }
+
+  // History shortcut (Alt+H or Ctrl+H)
+  if ((altKey || ctrlKey) && (key === "h" || key === "H")) {
+    event.preventDefault();
+    if (typeof toggleHistoryDrawer === "function") {
+      toggleHistoryDrawer();
+    }
+    return;
+  }
 
   if (key === "Escape") {
     if (typeof historyDrawer !== "undefined" && historyDrawer && !historyDrawer.classList.contains("drawer-hidden")) {
@@ -254,6 +281,17 @@ window.addEventListener("keydown", (event) => {
       return;
     }
   }
+
+  // Ignore keystrokes when typing into text/number input fields
+  if (
+    event.target &&
+    (event.target.tagName === "INPUT" || event.target.tagName === "TEXTAREA")
+  ) {
+    return;
+  }
+
+  // Do not process arithmetic keypad input if modifiers are active
+  if (altKey || ctrlKey || event.metaKey) return;
 
   if (
     /^[0-9]$/.test(key) ||
@@ -2262,5 +2300,29 @@ document.querySelectorAll(".copy-display-btn").forEach((btn) => {
       copyTextToClipboard(val);
     }
   });
+});
+
+// Responsive resize listener for desktop history synchronization
+let resizeSyncTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeSyncTimer);
+  resizeSyncTimer = setTimeout(() => {
+    const isDesktop = window.innerWidth >= 1024;
+    const boxEl = document.querySelector("#box");
+    if (isDesktop) {
+      if (drawerBackdrop) drawerBackdrop.classList.add("backdrop-hidden");
+      if (navDrawer) navDrawer.classList.add("drawer-hidden");
+      const desktopHistoryPref = localStorage.getItem("countup_desktop_history_open");
+      if (desktopHistoryPref !== "false") {
+        if (boxEl) boxEl.classList.add("history-docked");
+        if (historyDrawer) historyDrawer.classList.remove("drawer-hidden");
+        if (historyToggleBtn) historyToggleBtn.classList.add("active");
+      }
+    } else {
+      if (boxEl) boxEl.classList.remove("history-docked");
+      if (historyToggleBtn) historyToggleBtn.classList.remove("active");
+      if (historyDrawer) historyDrawer.classList.add("drawer-hidden");
+    }
+  }, 100);
 });
 })();

@@ -63,12 +63,13 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 
 ## User Interface & Design System
 
-* **Navigation Drawer**: Smooth slide-out menu with high-contrast active route tracking.
-* **Calculation History Tape**: Dedicated history drawer storing calculation logs with one-click restoration into the active calculator register.
+* **Responsive Pro Studio Architecture**: Fluid, multi-tier layout automatically adapting between Mobile (< 640px), Tablet (640px - 1023px), Desktop Workstation (1024px - 1439px), and Ultra-wide (>= 1440px).
+* **Desktop Mode Navigation Bar**: Direct-access horizontal pill navigation strip on screens >= 1024px with keyboard shortcuts (`Alt+1` through `Alt+7`).
+* **Dockable Calculation History Tape**: On desktop viewports, calculation history transitions into an ergonomic docked right-hand sidebar alongside the active calculator with real-time updates and one-click recall; togglable via `Alt+H` or the history icon with state persistence in `localStorage`.
+* **Fluid Typography & Sizing**: Built using modern CSS `clamp()` functions for seamless readability and touch/click ergonomics across all display densities.
 * **One-Click Clipboard Copying**: Quick copy button on displays with animated floating toast notification feedback.
 * **Theme Switching**: Dark and Light themes with dynamic CSS variables and state persistence via `localStorage`.
 * **Zero Emojis**: 100% stroke-based SVG vector icons for a consistent, professional design language.
-* **Responsive Layouts**: Dynamic box container width scaling smoothly across standard (`20rem`) and extended multi-column modes (`24rem`).
 
 ---
 
