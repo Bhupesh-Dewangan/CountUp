@@ -369,6 +369,41 @@ body {
   transition: color 0.3s ease;
 }
 
+/* Scientific Function Secondary Bar */
+.sci-func-bar {
+  display: flex;
+  gap: 0.35rem;
+  width: 100%;
+  margin-bottom: 0.6rem;
+}
+
+.sci-func-pill {
+  flex: 1;
+  padding: 0.42rem 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  background: var(--display-bg);
+  color: var(--sub-display-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sci-func-pill:hover {
+  background: var(--btn-hover);
+  color: var(--display-text);
+}
+
+.sci-func-pill.active {
+  background: var(--operator-bg);
+  color: var(--operator-text);
+}
+
 /* Scientific Grid */
 .sci-grid {
   display: grid;

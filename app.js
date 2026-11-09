@@ -530,12 +530,16 @@ switchMode(savedMode);
 const sciDisplay = document.querySelector("#sci-show");
 const sciSubDisplay = document.querySelector("#sci-sub-display");
 const sciAngleModeBtn = document.querySelector("#sci-angle-mode");
-const sciButtons = document.querySelectorAll("#sci-btn button");
+const sciButtons = document.querySelectorAll("#sci-btn button, .sci-func-bar button.sci-operator");
+const sci2ndBtn = document.querySelector("#sci-2nd-btn");
+const sciHypBtn = document.querySelector("#sci-hyp-btn");
 
 let sciCurrentInput = "";
 let sciIsEvaluated = false;
 let sciLastAns = "0";
 let sciAngleMode = localStorage.getItem("countup_angle_mode") || "DEG";
+let sciIs2nd = false;
+let sciIsHyp = false;
 
 if (sciAngleModeBtn) {
   sciAngleModeBtn.textContent = sciAngleMode;
@@ -546,12 +550,61 @@ if (sciAngleModeBtn) {
   });
 }
 
+function updateSciKeyLabels() {
+  const sinBtn = document.querySelector('[data-action="sin"]');
+  const cosBtn = document.querySelector('[data-action="cos"]');
+  const tanBtn = document.querySelector('[data-action="tan"]');
+  const sqrtBtn = document.querySelector('[data-action="sqrt"]');
+
+  if (sinBtn) {
+    if (sciIsHyp) sinBtn.textContent = sciIs2nd ? "asinh" : "sinh";
+    else sinBtn.textContent = sciIs2nd ? "asin" : "sin";
+  }
+  if (cosBtn) {
+    if (sciIsHyp) cosBtn.textContent = sciIs2nd ? "acosh" : "cosh";
+    else cosBtn.textContent = sciIs2nd ? "acos" : "cos";
+  }
+  if (tanBtn) {
+    if (sciIsHyp) tanBtn.textContent = sciIs2nd ? "atanh" : "tanh";
+    else tanBtn.textContent = sciIs2nd ? "atan" : "tan";
+  }
+  if (sqrtBtn) {
+    sqrtBtn.innerHTML = sciIs2nd ? "&sup3;&radic;" : "&radic;";
+  }
+}
+
+if (sci2ndBtn) {
+  sci2ndBtn.addEventListener("click", () => {
+    sciIs2nd = !sciIs2nd;
+    sci2ndBtn.classList.toggle("active", sciIs2nd);
+    updateSciKeyLabels();
+  });
+}
+
+if (sciHypBtn) {
+  sciHypBtn.addEventListener("click", () => {
+    sciIsHyp = !sciIsHyp;
+    sciHypBtn.classList.toggle("active", sciIsHyp);
+    updateSciKeyLabels();
+  });
+}
+
 function calculateFactorial(n) {
   if (n < 0 || !Number.isInteger(n)) return NaN;
   if (n > 170) return Infinity;
   let res = 1;
   for (let i = 2; i <= n; i++) res *= i;
   return res;
+}
+
+function nPr(n, r) {
+  if (n < 0 || r < 0 || r > n) return NaN;
+  return calculateFactorial(n) / calculateFactorial(n - r);
+}
+
+function nCr(n, r) {
+  if (n < 0 || r < 0 || r > n) return NaN;
+  return calculateFactorial(n) / (calculateFactorial(r) * calculateFactorial(n - r));
 }
 
 function autoCloseParens(expr) {
@@ -577,23 +630,41 @@ function evaluateSciExpression(expression, angleMode) {
   s = s.replace(/\^/g, "**");
   s = s.replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-");
 
-  // Trigonometric & logarithmic replacements
+  // Hyperbolic
+  s = s.replace(/\basinh\(([^)]+)\)/g, "Math.asinh($1)");
+  s = s.replace(/\bacosh\(([^)]+)\)/g, "Math.acosh($1)");
+  s = s.replace(/\batanh\(([^)]+)\)/g, "Math.atanh($1)");
+  s = s.replace(/\bsinh\(([^)]+)\)/g, "Math.sinh($1)");
+  s = s.replace(/\bcosh\(([^)]+)\)/g, "Math.cosh($1)");
+  s = s.replace(/\btanh\(([^)]+)\)/g, "Math.tanh($1)");
+
+  // Inverse trig & standard trig
   if (angleMode === "DEG") {
-    s = s.replace(/sin\(([^)]+)\)/g, "Math.sin(($1) * Math.PI / 180)");
-    s = s.replace(/cos\(([^)]+)\)/g, "Math.cos(($1) * Math.PI / 180)");
-    s = s.replace(/tan\(([^)]+)\)/g, "Math.tan(($1) * Math.PI / 180)");
+    s = s.replace(/\basin\(([^)]+)\)/g, "(Math.asin($1) * 180 / Math.PI)");
+    s = s.replace(/\bacos\(([^)]+)\)/g, "(Math.acos($1) * 180 / Math.PI)");
+    s = s.replace(/\batan\(([^)]+)\)/g, "(Math.atan($1) * 180 / Math.PI)");
+    s = s.replace(/\bsin\(([^)]+)\)/g, "Math.sin(($1) * Math.PI / 180)");
+    s = s.replace(/\bcos\(([^)]+)\)/g, "Math.cos(($1) * Math.PI / 180)");
+    s = s.replace(/\btan\(([^)]+)\)/g, "Math.tan(($1) * Math.PI / 180)");
   } else {
-    s = s.replace(/sin\(([^)]+)\)/g, "Math.sin($1)");
-    s = s.replace(/cos\(([^)]+)\)/g, "Math.cos($1)");
-    s = s.replace(/tan\(([^)]+)\)/g, "Math.tan($1)");
+    s = s.replace(/\basin\(([^)]+)\)/g, "Math.asin($1)");
+    s = s.replace(/\bacos\(([^)]+)\)/g, "Math.acos($1)");
+    s = s.replace(/\batan\(([^)]+)\)/g, "Math.atan($1)");
+    s = s.replace(/\bsin\(([^)]+)\)/g, "Math.sin($1)");
+    s = s.replace(/\bcos\(([^)]+)\)/g, "Math.cos($1)");
+    s = s.replace(/\btan\(([^)]+)\)/g, "Math.tan($1)");
   }
 
-  s = s.replace(/log\(([^)]+)\)/g, "Math.log10($1)");
-  s = s.replace(/ln\(([^)]+)\)/g, "Math.log($1)");
-  s = s.replace(/sqrt\(([^)]+)\)/g, "Math.sqrt($1)");
+  s = s.replace(/\blog\(([^)]+)\)/g, "Math.log10($1)");
+  s = s.replace(/\bln\(([^)]+)\)/g, "Math.log($1)");
+  s = s.replace(/\bsqrt\(([^)]+)\)/g, "Math.sqrt($1)");
+  s = s.replace(/\bcbrt\(([^)]+)\)/g, "Math.cbrt($1)");
+  s = s.replace(/\bnPr\(([^,]+),([^)]+)\)/g, "nPr($1,$2)");
+  s = s.replace(/\bnCr\(([^,]+),([^)]+)\)/g, "nCr($1,$2)");
 
   try {
-    const result = new Function(`return (${s})`)();
+    const fn = new Function("nPr", "nCr", `return (${s})`);
+    const result = fn(nPr, nCr);
     if (!Number.isFinite(result)) {
       return "Cannot divide by zero";
     }
@@ -621,7 +692,7 @@ function handleSciInput(btn) {
       sciIsEvaluated = false;
       if (sciSubDisplay) sciSubDisplay.textContent = "";
     } else {
-      const funcMatch = sciCurrentInput.match(/(sin\(|cos\(|tan\(|log\(|ln\(|sqrt\()$/);
+      const funcMatch = sciCurrentInput.match(/(sin\(|cos\(|tan\(|asin\(|acos\(|atan\(|sinh\(|cosh\(|tanh\(|log\(|ln\(|sqrt\(|cbrt\(|nPr\(|nCr\()$/);
       if (funcMatch) {
         sciCurrentInput = sciCurrentInput.slice(0, -funcMatch[0].length);
       } else {
@@ -673,7 +744,57 @@ function handleSciInput(btn) {
     return;
   }
 
-  if (action === "sin" || action === "cos" || action === "tan" || action === "log" || action === "ln" || action === "sqrt") {
+  if (action === "sin" || action === "cos" || action === "tan") {
+    let fnName = action;
+    if (sciIsHyp) fnName = sciIs2nd ? `a${action}h` : `${action}h`;
+    else fnName = sciIs2nd ? `a${action}` : action;
+
+    if (sciIsEvaluated || sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") {
+      sciCurrentInput = `${fnName}(`;
+      sciIsEvaluated = false;
+    } else {
+      sciCurrentInput += `${fnName}(`;
+    }
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "sqrt") {
+    const fnName = sciIs2nd ? "cbrt" : "sqrt";
+    if (sciIsEvaluated || sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") {
+      sciCurrentInput = `${fnName}(`;
+      sciIsEvaluated = false;
+    } else {
+      sciCurrentInput += `${fnName}(`;
+    }
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "cbrt") {
+    if (sciIsEvaluated || sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") {
+      sciCurrentInput = "cbrt(";
+      sciIsEvaluated = false;
+    } else {
+      sciCurrentInput += "cbrt(";
+    }
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "npr" || action === "ncr") {
+    const fnName = action === "npr" ? "nPr(" : "nCr(";
+    if (sciIsEvaluated || sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") {
+      sciCurrentInput = fnName;
+      sciIsEvaluated = false;
+    } else {
+      sciCurrentInput += fnName;
+    }
+    if (sciDisplay) sciDisplay.value = sciCurrentInput;
+    return;
+  }
+
+  if (action === "log" || action === "ln") {
     if (sciIsEvaluated || sciCurrentInput === "Error" || sciCurrentInput === "Cannot divide by zero") {
       sciCurrentInput = `${action}(`;
       sciIsEvaluated = false;
@@ -786,7 +907,7 @@ function handleSciInput(btn) {
 
 if (sciButtons) {
   sciButtons.forEach((btn) => {
-    if (btn.id === "sci-angle-mode") return;
+    if (btn.id === "sci-angle-mode" || btn.id === "sci-2nd-btn" || btn.id === "sci-hyp-btn") return;
     btn.addEventListener("click", () => handleSciInput(btn));
   });
 }
