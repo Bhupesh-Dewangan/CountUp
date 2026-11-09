@@ -1690,6 +1690,8 @@ const diffCalcBtn = document.querySelector("#diff-calc-btn");
 const diffResPrimary = document.querySelector("#diff-res-primary");
 const diffResDays = document.querySelector("#diff-res-days");
 const diffResWeeks = document.querySelector("#diff-res-weeks");
+const diffResBusiness = document.querySelector("#diff-res-business");
+const diffResWeekends = document.querySelector("#diff-res-weekends");
 
 function runDiffCalculation() {
   if (!diffStartInput || !diffEndInput || !diffResPrimary) return;
@@ -1726,6 +1728,19 @@ function runDiffCalculation() {
   const weeks = Math.floor(totalDays / 7);
   const remDays = totalDays % 7;
 
+  let businessDays = 0;
+  let weekendDays = 0;
+  const cur = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  while (cur < end) {
+    cur.setDate(cur.getDate() + 1);
+    const day = cur.getDay();
+    if (day === 0 || day === 6) {
+      weekendDays++;
+    } else {
+      businessDays++;
+    }
+  }
+
   const parts = [];
   if (years > 0) parts.push(`${years} ${years === 1 ? "Year" : "Years"}`);
   if (months > 0) parts.push(`${months} ${months === 1 ? "Month" : "Months"}`);
@@ -1734,6 +1749,8 @@ function runDiffCalculation() {
   diffResPrimary.textContent = parts.join(", ") + (isReverse ? " (Past)" : "");
   if (diffResDays) diffResDays.textContent = `${totalDays.toLocaleString()} Days`;
   if (diffResWeeks) diffResWeeks.textContent = `${weeks.toLocaleString()} Weeks, ${remDays} Days`;
+  if (diffResBusiness) diffResBusiness.textContent = `${businessDays.toLocaleString()} Days`;
+  if (diffResWeekends) diffResWeekends.textContent = `${weekendDays.toLocaleString()} Days`;
 }
 
 if (diffCalcBtn) diffCalcBtn.addEventListener("click", runDiffCalculation);
