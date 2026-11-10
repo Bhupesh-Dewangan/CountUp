@@ -36,14 +36,18 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 * **GST & Sales Tax**: Inclusive and Exclusive tax calculation with instant percentage presets (`5%`, `12%`, `18%`, `28%`) and custom rates.
 
 ### 5. Unit & Measurement Converter
-* **Multi-Category Coverage**: Instant conversion across 7 primary measurement and currency domains:
-  * **Currency**: Real-time cross-currency conversion across 10 major global currencies (`INR ₹`, `USD $`, `EUR €`, `GBP £`, `JPY ¥`, `CAD CA$`, `AUD AU$`, `AED د.إ`, `CNY ¥`, `CHF Fr`) with an interactive **Baseline Exchange Rates Panel** allowing users to customize and persist exchange rates locally with a one-click reset.
+* **Multi-Category Coverage**: Instant conversion across 11 primary measurement, physical, and currency domains:
   * **Length**: Millimeter, Centimeter, Meter, Kilometer, Inch, Foot, Yard, Mile.
+  * **Area**: Square Millimeter, Square Centimeter, Square Meter, Square Kilometer, Square Inch, Square Foot, Square Yard, Acre, Hectare, Square Mile.
   * **Mass / Weight**: Milligram, Gram, Kilogram, Metric Ton, Ounce, Pound.
-  * **Volume**: Liter, Milliliter, Cubic Meter, Gallon, Quart, Pint, Cup, Fluid Ounce.
+  * **Volume**: Liter, Milliliter, Cubic Meter, Gallon, Quart, Pint, Cup, Fluid Ounce, Tablespoon, Teaspoon.
+  * **Time**: Millisecond, Second, Minute, Hour, Day, Week, Month (30 days), Year (365 days).
+  * **Speed**: Meters per second (m/s), Kilometers per hour (km/h), Miles per hour (mph), Knots, Foot per second (ft/s).
+  * **Pressure**: Pascal (Pa), Kilopascal (kPa), Megapascal (MPa), Bar, Pounds per Square Inch (PSI), Standard Atmosphere (atm), Torr (mmHg).
+  * **Energy**: Joule (J), Kilojoule (kJ), Megajoule (MJ), Calorie (cal), Kilocalorie (kcal), Watt-hour (Wh), Kilowatt-hour (kWh), Foot-pound (ft-lb), British Thermal Unit (BTU).
   * **Temperature**: Celsius, Fahrenheit, Kelvin (with exact affine formulas).
-  * **Digital Data**: Byte, Kilobyte, Megabyte, Gigabyte, Terabyte, Petabyte (base 1024).
-  * **Speed**: Meters per second, Kilometers per hour, Miles per hour, Knots.
+  * **Digital Data**: Byte, Kilobyte, Megabyte, Gigabyte, Terabyte (base 1024), Bit.
+  * **Currency**: Real-time cross-currency conversion across 10 major global currencies (`INR ₹`, `USD $`, `EUR €`, `GBP £`, `JPY ¥`, `CAD CA$`, `AUD AU$`, `AED د.إ`, `CNY ¥`, `CHF Fr`) with an interactive **Baseline Exchange Rates Panel** allowing users to customize and persist exchange rates locally with a one-click reset.
 * **Reactive Two-Way Binding**: Real-time synchronization updating the opposing field regardless of which direction is edited.
 * **Quick Unit Swap**: One-click orientation reversal with smooth icon animation.
 * **Live Conversion Formula**: Contextual mathematical rate card display.
