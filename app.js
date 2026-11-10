@@ -1749,8 +1749,55 @@ const convFromSelect = document.querySelector("#conv-from-unit");
 const convToSelect = document.querySelector("#conv-to-unit");
 const convSwapBtn = document.querySelector("#conv-swap-btn");
 const convFormulaVal = document.querySelector("#conv-formula-val");
+const convCurrencyRatesCard = document.querySelector("#conv-currency-rates-card");
+const convRatesGrid = document.querySelector("#conv-rates-grid");
+const convRatesResetBtn = document.querySelector("#conv-rates-reset-btn");
 
 let convActiveCat = "length";
+
+// Baseline Exchange Rates Definition (Base: 1 USD)
+const defaultCurrencyRates = {
+  USD: { name: "US Dollar", symbol: "$", rate: 1.0 },
+  INR: { name: "Indian Rupee", symbol: "₹", rate: 86.5 },
+  EUR: { name: "Euro", symbol: "€", rate: 0.92 },
+  GBP: { name: "British Pound", symbol: "£", rate: 0.79 },
+  JPY: { name: "Japanese Yen", symbol: "¥", rate: 153.2 },
+  CAD: { name: "Canadian Dollar", symbol: "CA$", rate: 1.39 },
+  AUD: { name: "Australian Dollar", symbol: "AU$", rate: 1.52 },
+  AED: { name: "UAE Dirham", symbol: "د.إ", rate: 3.67 },
+  CNY: { name: "Chinese Yuan", symbol: "¥", rate: 7.24 },
+  CHF: { name: "Swiss Franc", symbol: "Fr", rate: 0.88 },
+};
+
+function loadStoredCurrencyRates() {
+  try {
+    const saved = localStorage.getItem("countup_currency_rates");
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      const merged = JSON.parse(JSON.stringify(defaultCurrencyRates));
+      Object.keys(parsed).forEach((k) => {
+        if (merged[k] && typeof parsed[k].rate === "number" && parsed[k].rate > 0) {
+          merged[k].rate = parsed[k].rate;
+        }
+      });
+      return merged;
+    }
+  } catch (e) {
+    // Fallback to defaults
+  }
+  return JSON.parse(JSON.stringify(defaultCurrencyRates));
+}
+
+let activeCurrencyRates = loadStoredCurrencyRates();
+
+function buildCurrencyUnitMap() {
+  const units = {};
+  Object.keys(activeCurrencyRates).forEach((code) => {
+    const curr = activeCurrencyRates[code];
+    units[`${code} (${curr.symbol})`] = 1 / curr.rate;
+  });
+  return units;
+}
 
 const unitDefinitions = {
   length: {
@@ -1832,6 +1879,12 @@ const unitDefinitions = {
       "Teaspoon (US)": 0.00492892159375,
     },
   },
+  currency: {
+    name: "Currency",
+    defaultFrom: "USD ($)",
+    defaultTo: "INR (₹)",
+    units: buildCurrencyUnitMap(),
+  },
 };
 
 function convertUnits(cat, val, fromU, toU) {
@@ -1856,6 +1909,13 @@ function convertUnits(cat, val, fromU, toU) {
 
 function formatConvertedNumber(num) {
   if (num === 0) return "0";
+  if (convActiveCat === "currency") {
+    if (Math.abs(num) >= 1e9) {
+      return num.toExponential(4);
+    }
+    const dec = Math.abs(num) < 0.01 && num !== 0 ? 4 : 2;
+    return parseFloat(num.toFixed(dec)).toString();
+  }
   if (Math.abs(num) < 0.00001 || Math.abs(num) >= 1e9) {
     return num.toExponential(6).replace(/\.?0+e/, "e");
   }
@@ -1877,6 +1937,10 @@ function updateFormulaPreview() {
     } else {
       convFormulaVal.textContent = `${fromU} to ${toU}`;
     }
+  } else if (convActiveCat === "currency") {
+    const rate = convertUnits(convActiveCat, 1, fromU, toU);
+    const rateStr = rate >= 100 ? rate.toFixed(2) : rate.toFixed(4);
+    convFormulaVal.textContent = `1 ${fromU} = ${rateStr} ${toU}`;
   } else {
     const rate = convertUnits(convActiveCat, 1, fromU, toU);
     convFormulaVal.textContent = `1 ${fromU} = ${formatConvertedNumber(rate)} ${toU}`;
@@ -1915,6 +1979,10 @@ function populateUnitSelects(catKey) {
   const def = unitDefinitions[catKey];
   if (!def) return;
 
+  if (convCurrencyRatesCard) {
+    convCurrencyRatesCard.style.display = catKey === "currency" ? "flex" : "none";
+  }
+
   convFromSelect.innerHTML = "";
   convToSelect.innerHTML = "";
 
@@ -1933,6 +2001,67 @@ function populateUnitSelects(catKey) {
   });
 
   syncConversion("forward");
+}
+
+function renderCurrencyRatesGrid() {
+  if (!convRatesGrid) return;
+  convRatesGrid.innerHTML = "";
+
+  Object.keys(activeCurrencyRates).forEach((code) => {
+    const curr = activeCurrencyRates[code];
+    const isBase = code === "USD";
+
+    const itemEl = document.createElement("div");
+    itemEl.className = "conv-rate-item";
+
+    const tagEl = document.createElement("div");
+    tagEl.className = "conv-rate-tag";
+    tagEl.innerHTML = `<span class="conv-rate-code">${code}</span><span class="conv-rate-sym">${curr.symbol}${isBase ? " (Base)" : ""}</span>`;
+
+    const inputEl = document.createElement("input");
+    inputEl.type = "number";
+    inputEl.className = "conv-rate-input";
+    inputEl.value = isBase ? "1.00" : String(curr.rate);
+    inputEl.step = isBase ? "0.01" : curr.rate >= 10 ? "0.1" : "0.01";
+    inputEl.min = "0.0001";
+    if (isBase) {
+      inputEl.disabled = true;
+      inputEl.style.opacity = "0.6";
+    } else {
+      inputEl.dataset.curr = code;
+      inputEl.addEventListener("input", (e) => {
+        const newRate = parseFloat(e.target.value);
+        if (!isNaN(newRate) && newRate > 0) {
+          activeCurrencyRates[code].rate = newRate;
+          try {
+            localStorage.setItem("countup_currency_rates", JSON.stringify(activeCurrencyRates));
+          } catch (err) {}
+          unitDefinitions.currency.units = buildCurrencyUnitMap();
+          if (convActiveCat === "currency") {
+            syncConversion("forward");
+          }
+        }
+      });
+    }
+
+    itemEl.appendChild(tagEl);
+    itemEl.appendChild(inputEl);
+    convRatesGrid.appendChild(itemEl);
+  });
+}
+
+if (convRatesResetBtn) {
+  convRatesResetBtn.addEventListener("click", () => {
+    activeCurrencyRates = JSON.parse(JSON.stringify(defaultCurrencyRates));
+    try {
+      localStorage.removeItem("countup_currency_rates");
+    } catch (err) {}
+    unitDefinitions.currency.units = buildCurrencyUnitMap();
+    renderCurrencyRatesGrid();
+    if (convActiveCat === "currency") {
+      syncConversion("forward");
+    }
+  });
 }
 
 convCatBtns.forEach((btn) => {
@@ -1970,6 +2099,7 @@ if (convSwapBtn) {
 }
 
 populateUnitSelects("length");
+renderCurrencyRatesGrid();
 
 // Date & Age Calculator Engine
 const dateTabBtns = document.querySelectorAll(".date-tab-btn");
