@@ -36,7 +36,8 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 * **GST & Sales Tax**: Inclusive and Exclusive tax calculation with instant percentage presets (`5%`, `12%`, `18%`, `28%`) and custom rates.
 
 ### 5. Unit & Measurement Converter
-* **Multi-Category Coverage**: Instant conversion across 6 primary measurement domains:
+* **Multi-Category Coverage**: Instant conversion across 7 primary measurement and currency domains:
+  * **Currency**: Real-time cross-currency conversion across 10 major global currencies (`INR ₹`, `USD $`, `EUR €`, `GBP £`, `JPY ¥`, `CAD CA$`, `AUD AU$`, `AED د.إ`, `CNY ¥`, `CHF Fr`) with an interactive **Baseline Exchange Rates Panel** allowing users to customize and persist exchange rates locally with a one-click reset.
   * **Length**: Millimeter, Centimeter, Meter, Kilometer, Inch, Foot, Yard, Mile.
   * **Mass / Weight**: Milligram, Gram, Kilogram, Metric Ton, Ounce, Pound.
   * **Volume**: Liter, Milliliter, Cubic Meter, Gallon, Quart, Pint, Cup, Fluid Ounce.
