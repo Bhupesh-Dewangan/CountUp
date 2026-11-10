@@ -676,12 +676,20 @@ button.pressed {
   padding: 0.25rem;
   margin-bottom: 1rem;
   gap: 0.3rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fin-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .fin-tab-btn {
   flex: 1;
-  padding: 0.55rem 0.4rem;
-  font-size: 0.85rem;
+  white-space: nowrap;
+  min-width: 0;
+  padding: 0.55rem 0.35rem;
+  font-size: 0.8rem;
   font-weight: 600;
   border: none;
   background: transparent;
@@ -689,6 +697,7 @@ button.pressed {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
+  text-align: center;
 }
 
 .fin-tab-btn:hover {
@@ -906,6 +915,102 @@ button.pressed {
 .gst-type-btn.active {
   background: var(--equal-bg);
   color: var(--equal-text);
+}
+
+/* Compound Interest (FD/RD) Styles */
+.ci-type-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+
+.ci-type-btn {
+  padding: 0.55rem 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.ci-type-btn:hover {
+  background: var(--btn-hover);
+}
+
+.ci-type-btn.active {
+  background: var(--brand-color);
+  color: #ffffff;
+  box-shadow: 0 2px 6px var(--shadow-color);
+}
+
+.ci-rate-chips {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.35rem;
+  margin-top: 0.35rem;
+}
+
+.ci-chip-btn {
+  padding: 0.4rem 0.2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.ci-chip-btn:hover {
+  background: var(--btn-hover);
+}
+
+.ci-chip-btn.active {
+  background: var(--operator-bg);
+  color: var(--operator-text);
+  box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+.ci-freq-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.35rem;
+}
+
+@media (max-width: 440px) {
+  .ci-freq-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.ci-freq-btn {
+  padding: 0.52rem 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.ci-freq-btn:hover {
+  background: var(--btn-hover);
+}
+
+.ci-freq-btn.active {
+  background: var(--equal-bg);
+  color: var(--equal-text);
+  box-shadow: 0 2px 6px var(--shadow-color);
 }
 
 /* Unit Converter Styles */
