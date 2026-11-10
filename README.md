@@ -84,12 +84,41 @@ CountUp is a high-precision, multi-mode calculator and numerical utility suite e
 
 ## Project Structure
 
+CountUp follows a clean, decoupled modular architecture where styling and logic are decomposed into feature-focused components:
+
 ```
 CountUp/
-├── index.html        # Semantic HTML5 markup containing all 7 mode views
-├── style.css         # Modern CSS3 styling, CSS variables, and layout systems
-├── app.js            # Vanilla JavaScript modular calculation engines and router
-└── README.md         # Comprehensive project documentation
+├── index.html               # Main semantic HTML5 container and application shell
+├── style.css                # Master CSS entrypoint importing all modular stylesheets
+├── app.js                   # Application bootstrap orchestrator and desktop window synchronizer
+├── css/                     # Modular stylesheet architecture
+│   ├── base.css             # CSS reset, typography, and dark/light color themes
+│   ├── layout.css           # Responsive workspace shell, navigation drawers, and modal dialogs
+│   ├── standard.css         # Standard arithmetic calculator display and keypad
+│   ├── scientific.css       # Scientific function bar (DEG/RAD, 2nd, hyp) and 5-column keypad
+│   ├── programmer.css       # Quad-Base monitor (HEX/DEC/OCT/BIN) and bitwise controls
+│   ├── financial.css        # Financial tabs, loan EMI, SIP, Compound FD/RD, and GST tax cards
+│   ├── converter.css        # Unit converter ribbon, bridge cards, and baseline currency rates
+│   ├── date-calc.css        # Date calculator subtabs and multi-metric interval analytics grid
+│   ├── bmi.css              # Metric/Imperial BMI form, sliders, gauge meter, and health advice
+│   ├── history.css          # Dockable calculation history tape and clipboard toast feedback
+│   └── responsive.css       # Multi-tier responsive breakpoints (Tablet 640px, Desktop 1024px, 4K)
+├── js/
+│   ├── core/                # Core application infrastructure
+│   │   ├── utils.js         # Number & currency formatting, clipboard copy, and toast notifications
+│   │   ├── theme.js         # Theme engine, system preference detection, and localStorage sync
+│   │   ├── history.js       # Calculation tape memory, UI rendering, recall, and docked sidebar state
+│   │   ├── router.js        # Mode router, drawer navigation, and active view switching
+│   │   └── shortcuts.js     # Keyboard shortcut dispatcher and cheatsheet modal
+│   └── modes/               # Isolated computational engines
+│       ├── standard.js      # Standard arithmetic calculator with numpad keyboard dispatch
+│       ├── scientific.js    # Scientific engine (trig, hyperbolic, powers, roots, combinatorics)
+│       ├── programmer.js    # Programmer 4-base monitor and 64-bit BigInt bitwise logic
+│       ├── financial.js     # Financial formulas (EMI, SIP, Compound Interest FD/RD, GST)
+│       ├── converter.js     # Unit converter across 11 domains and baseline currency engine
+│       ├── date-calc.js     # Chronological age calculator and calendar interval analytics
+│       └── bmi.js           # Health & BMI engine, unit toggling, and gauge pointer calculation
+└── README.md                # Comprehensive suite documentation
 ```
 
 ---
