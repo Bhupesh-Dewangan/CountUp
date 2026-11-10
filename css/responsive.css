@@ -1,0 +1,391 @@
+/* Tablet & Phablet (min-width: 640px) */
+@media (min-width: 640px) {
+  #app-container {
+    padding: 1.5rem;
+  }
+
+  #box {
+    max-width: 26rem;
+  }
+
+  #box.scientific-mode,
+  #box.programmer-mode,
+  #box.financial-mode,
+  #box.converter-mode,
+  #box.date-mode,
+  #box.bmi-mode {
+    max-width: 32rem;
+  }
+}
+
+/* Desktop & Laptop (min-width: 1024px) */
+@media (min-width: 1024px) {
+  #app-container {
+    padding: 2rem 2.5rem;
+    max-width: var(--app-max-width);
+  }
+
+  #menu-toggle {
+    display: none;
+  }
+
+  #shortcuts-toggle {
+    display: flex;
+  }
+
+  .shortcut-kbd {
+    display: inline-block;
+  }
+
+  /* Desktop Mode Navigation Bar */
+  .desktop-mode-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    width: 100%;
+    margin-bottom: 1.1rem;
+    padding: 0.35rem;
+    background: var(--display-bg);
+    border-radius: 12px;
+    box-shadow: inset 0 2px 4px var(--shadow-color);
+  }
+
+  .desktop-mode-bar .mode-item {
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--sub-display-text);
+    font-size: 0.86rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  .desktop-mode-bar .mode-item:hover {
+    background: var(--btn-hover);
+    color: var(--display-text);
+  }
+
+  .desktop-mode-bar .mode-item.active {
+    background: var(--operator-bg);
+    color: var(--operator-text);
+    font-weight: 600;
+    box-shadow: 0 2px 6px var(--shadow-color);
+  }
+
+  #box {
+    max-width: 28rem;
+    box-shadow: 0 16px 40px var(--shadow-color);
+  }
+
+  #box.scientific-mode,
+  #box.programmer-mode,
+  #box.financial-mode,
+  #box.converter-mode,
+  #box.date-mode,
+  #box.bmi-mode {
+    max-width: 38rem;
+  }
+
+  /* Multi-Pane Workspace Layout */
+  .main-workspace {
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  #calculator-viewport {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Backdrop hidden on desktop to allow simultaneous interactions */
+  #drawer-backdrop {
+    display: none !important;
+  }
+
+  /* Docked History Sidebar on Desktop */
+  #box.history-docked {
+    max-width: 52rem;
+  }
+
+  #box.history-docked.scientific-mode,
+  #box.history-docked.programmer-mode,
+  #box.history-docked.financial-mode,
+  #box.history-docked.converter-mode,
+  #box.history-docked.date-mode,
+  #box.history-docked.bmi-mode {
+    max-width: 62rem;
+  }
+
+  #box.history-docked #history-drawer {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: 19rem;
+    max-width: 19rem;
+    min-height: 28rem;
+    border-radius: 16px;
+    background: var(--display-bg);
+    box-shadow: inset 0 2px 6px var(--shadow-color);
+    border: 1px solid var(--toggle-bg);
+    transform: none;
+    z-index: 1;
+    pointer-events: auto;
+    display: flex;
+  }
+
+  #box:not(.history-docked) #history-drawer {
+    display: none;
+  }
+
+  #history-toggle.active {
+    background: var(--operator-bg);
+    color: var(--operator-text);
+  }
+
+  /* Financial Split-Pane 2-Column Grid */
+  .fin-subtab-panel.active-subtab {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    width: 100%;
+  }
+
+  .fin-inputs-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .fin-results-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  .fin-results-col .fin-results-card {
+    height: 100%;
+    margin-top: 0;
+    padding: 1.2rem 1.4rem;
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+
+  /* Unit Converter Horizontal Bridge Layout */
+  .conv-bridge-row {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .conv-bridge-row .conv-unit-block {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .conv-bridge-row .conv-swap-row {
+    width: auto;
+    margin: 1.2rem 0 0 0;
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  .conv-card .conv-formula-card {
+    margin-top: 1rem;
+    padding: 1rem 1.25rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Date Split-Pane 2-Column Grid */
+  .date-subtab-panel.active-subtab {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 1.5rem;
+    align-items: start;
+    width: 100%;
+  }
+
+  .date-inputs-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .date-results-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  .date-results-col .date-results-card {
+    height: 100%;
+    margin-top: 0;
+    padding: 1.2rem 1.4rem;
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+
+  /* BMI Split-Pane 2-Column Grid */
+  .bmi-workspace-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .bmi-inputs-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .bmi-results-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  .bmi-results-col .bmi-results-card {
+    height: 100%;
+    margin-top: 0;
+    padding: 1.2rem 1.4rem;
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+
+  /* Desktop Keypad Ergonomics */
+  #in-btn {
+    gap: 0.65rem;
+  }
+
+  #in-btn button {
+    padding: 0.95rem 0.5rem;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 5px var(--shadow-color);
+  }
+
+  #in-btn button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+  }
+
+  #in-btn button:active,
+  #in-btn button.pressed {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px var(--shadow-color);
+  }
+
+  .sci-func-bar {
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .sci-func-pill {
+    padding: 0.55rem 0.6rem;
+    font-size: 0.85rem;
+    border-radius: 9px;
+  }
+
+  .sci-grid {
+    gap: 0.55rem;
+  }
+
+  .sci-grid button {
+    padding: 0.82rem 0.5rem;
+    font-size: 1.02rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+  }
+
+  .sci-grid button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+  }
+
+  .sci-grid button:active,
+  .sci-grid button.pressed {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px var(--shadow-color);
+  }
+
+  /* Programmer Mode Desktop Optimization */
+  #prog-base-monitor {
+    gap: 0.4rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .base-row {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+
+  .base-row.active {
+    border-left: 4px solid var(--operator-bg);
+    box-shadow: 0 2px 8px var(--shadow-color);
+  }
+
+  .base-val {
+    font-size: 0.98rem;
+    font-family: 'Consolas', 'Cascadia Code', 'Fira Code', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .word-size-row {
+    margin-bottom: 0.75rem;
+  }
+
+  .word-toggle {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.86rem;
+    border-radius: 8px;
+  }
+
+  .prog-grid {
+    gap: 0.55rem;
+  }
+
+  .prog-grid button {
+    padding: 0.82rem 0.5rem;
+    font-size: 1.02rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+  }
+
+  .prog-grid button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+  }
+
+  .prog-grid button:active,
+  .prog-grid button.pressed {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px var(--shadow-color);
+  }
+}
+
+/* Ultra-wide & 4K (min-width: 1440px) */
+@media (min-width: 1440px) {
+  #app-container {
+    padding: 3rem 4rem;
+  }
+
+  #box {
+    box-shadow: 0 20px 50px var(--shadow-color);
+  }
+}

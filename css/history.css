@@ -1,0 +1,174 @@
+/* Calculation History Tape Drawer Styles */
+#history-drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 17rem;
+  max-width: 90vw;
+  background: var(--box-bg);
+  backdrop-filter: blur(16px);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: -4px 0 20px var(--shadow-color);
+  z-index: 50;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+}
+
+#history-drawer.drawer-hidden {
+  transform: translateX(105%);
+  pointer-events: none;
+}
+
+.history-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+#clear-history-btn,
+#close-history-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--sub-display-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem;
+  border-radius: 6px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+#clear-history-btn:hover,
+#close-history-btn:hover {
+  color: var(--display-text);
+  background: var(--toggle-bg);
+}
+
+#history-container {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.4rem;
+  padding-right: 0.2rem;
+}
+
+#history-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+#history-container::-webkit-scrollbar-thumb {
+  background: var(--toggle-bg);
+  border-radius: 4px;
+}
+
+.history-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  color: var(--sub-display-text);
+  font-size: 0.88rem;
+  font-style: italic;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.history-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.history-item {
+  background: var(--display-bg);
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+  border: 1px solid transparent;
+  text-align: right;
+  user-select: none;
+}
+
+.history-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px var(--shadow-color);
+  border-color: var(--operator-bg);
+  background: var(--btn-hover);
+}
+
+.history-item:active {
+  transform: translateY(0);
+}
+
+.history-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-item-mode {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--operator-bg);
+  letter-spacing: 0.05em;
+}
+
+.history-item-time {
+  font-size: 0.68rem;
+  color: var(--sub-display-text);
+  font-weight: 500;
+}
+
+.history-item-expr {
+  font-size: 0.85rem;
+  color: var(--sub-display-text);
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.history-item-result {
+  font-size: 1.15rem;
+  color: var(--display-text);
+  font-weight: 700;
+  word-break: break-all;
+}
+
+/* Clipboard Toast Notification */
+#copy-toast {
+  position: absolute;
+  bottom: 1.4rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  background: var(--btn-text);
+  color: var(--box-bg);
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 4px 14px var(--shadow-color);
+  z-index: 100;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 1;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+#copy-toast.copy-toast-hidden {
+  opacity: 0;
+  transform: translateX(-50%) translateY(12px);
+}

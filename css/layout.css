@@ -1,0 +1,287 @@
+/* Nav Drawer */
+#nav-drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 15rem;
+  background: var(--box-bg);
+  backdrop-filter: blur(16px);
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: 4px 0 20px var(--shadow-color);
+  z-index: 50;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(0);
+}
+
+#nav-drawer.drawer-hidden {
+  transform: translateX(-105%);
+  pointer-events: none;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--toggle-bg);
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--display-text);
+}
+
+#close-drawer {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--sub-display-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+}
+
+#close-drawer:hover {
+  color: var(--display-text);
+}
+
+.mode-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.mode-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: var(--btn-text);
+  font-size: 0.92rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.mode-item svg {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.mode-item:hover {
+  background: var(--btn-hover);
+}
+
+.mode-item.active {
+  background: var(--operator-bg);
+  color: var(--operator-text);
+  font-weight: 600;
+}
+
+/* Desktop Mode Bar - Hidden on mobile/tablet */
+.desktop-mode-bar {
+  display: none;
+}
+
+/* Drawer Backdrop */
+#drawer-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  z-index: 40;
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+#drawer-backdrop.backdrop-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Main Workspace Layout */
+.main-workspace {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mode Viewport */
+#calculator-viewport {
+  width: 100%;
+}
+
+
+/* Shortcut Keys Badge */
+.shortcut-kbd {
+  display: none;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.1rem 0.35rem;
+  background: var(--display-bg);
+  border: 1px solid var(--toggle-bg);
+  border-radius: 4px;
+  margin-left: 0.35rem;
+  opacity: 0.8;
+  font-family: inherit;
+  color: var(--sub-display-text);
+}
+
+#shortcuts-toggle {
+  display: none;
+  background: var(--toggle-bg);
+  border: none;
+  border-radius: 50%;
+  width: 2.3rem;
+  height: 2.3rem;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--btn-text);
+  box-shadow: 0 2px 6px var(--shadow-color);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#shortcuts-toggle:hover {
+  transform: scale(1.08);
+}
+
+#shortcuts-toggle:active {
+  transform: scale(0.95);
+}
+
+/* Keyboard Shortcuts Modal */
+.shortcuts-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.shortcuts-modal.modal-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.shortcuts-modal-content {
+  background: var(--box-bg);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px var(--shadow-color);
+  width: 90%;
+  max-width: 26rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  border: 1px solid var(--toggle-bg);
+  transform: translateY(0);
+  transition: transform 0.25s ease;
+}
+
+.shortcuts-modal.modal-hidden .shortcuts-modal-content {
+  transform: translateY(15px);
+}
+
+.shortcuts-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--display-text);
+}
+
+#close-shortcuts-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--sub-display-text);
+  padding: 0.2rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+#close-shortcuts-btn:hover {
+  color: var(--display-text);
+}
+
+.shortcuts-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.shortcut-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shortcut-group-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--operator-bg);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.shortcut-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  color: var(--btn-text);
+}
+
+.kbd-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.82rem;
+  color: var(--sub-display-text);
+}
+
+.kbd-wrap kbd {
+  background: var(--display-bg);
+  border: 1px solid var(--toggle-bg);
+  border-radius: 4px;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--display-text);
+  box-shadow: 0 1px 2px var(--shadow-color);
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINT SYSTEM
+   ============================================================ */
