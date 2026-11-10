@@ -104,3 +104,4 @@
   window.closeDrawer = closeDrawer;
   window.switchMode = switchMode;
 })();
+

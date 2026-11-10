@@ -210,3 +210,4 @@
   window.closeHistoryDrawer = closeHistoryDrawer;
   window.toggleHistoryDrawer = toggleHistoryDrawer;
 })();
+

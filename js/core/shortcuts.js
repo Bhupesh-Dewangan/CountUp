@@ -117,3 +117,4 @@
   window.openShortcutsModal = openShortcutsModal;
   window.closeShortcutsModal = closeShortcutsModal;
 })();
+

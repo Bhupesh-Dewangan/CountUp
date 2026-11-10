@@ -95,3 +95,4 @@
   window.copyTextToClipboard = copyTextToClipboard;
   window.formatCurrency = formatCurrency;
 })();
+
