@@ -1522,7 +1522,149 @@ if (sipCalcBtn) sipCalcBtn.addEventListener("click", calculateSIP);
   input?.addEventListener("input", calculateSIP);
 });
 
-// 3. GST Calculation
+// 3. Compound Interest (FD/RD) Calculation
+const ciTypeFdBtn = document.querySelector("#ci-type-fd");
+const ciTypeRdBtn = document.querySelector("#ci-type-rd");
+const ciAmountLabel = document.querySelector("#ci-amount-label");
+const ciPrincipalInput = document.querySelector("#ci-principal");
+const ciRateInput = document.querySelector("#ci-rate");
+const ciRateChips = document.querySelectorAll(".ci-chip-btn");
+const ciTenureInput = document.querySelector("#ci-tenure");
+const ciFreqBtns = document.querySelectorAll(".ci-freq-btn");
+const ciCalcBtn = document.querySelector("#ci-calc-btn");
+
+const ciMaturityEl = document.querySelector("#ci-res-maturity");
+const ciDepositLabelEl = document.querySelector("#ci-res-deposit-label");
+const ciPrincipalEl = document.querySelector("#ci-res-principal");
+const ciInterestEl = document.querySelector("#ci-res-interest");
+const ciApyEl = document.querySelector("#ci-res-apy");
+const ciGrowthEl = document.querySelector("#ci-res-growth");
+
+let ciDepositType = "fd";
+let ciCompoundingFreq = 4;
+
+function calculateCompoundInterest() {
+  const amount = parseFloat(ciPrincipalInput?.value) || 0;
+  const annualRate = parseFloat(ciRateInput?.value) || 0;
+  const years = parseFloat(ciTenureInput?.value) || 0;
+  const freq = ciCompoundingFreq || 4;
+
+  if (amount <= 0 || years <= 0) {
+    if (ciMaturityEl) ciMaturityEl.textContent = formatCurrency(amount);
+    if (ciPrincipalEl) ciPrincipalEl.textContent = formatCurrency(amount);
+    if (ciInterestEl) ciInterestEl.textContent = "₹0.00";
+    if (ciApyEl) ciApyEl.textContent = "0.00%";
+    if (ciGrowthEl) ciGrowthEl.textContent = "+0.00%";
+    return;
+  }
+
+  const r = annualRate / 100;
+  let maturity = 0;
+  let totalDeposit = 0;
+  let interest = 0;
+  let apy = 0;
+
+  if (ciDepositType === "fd") {
+    totalDeposit = amount;
+    if (annualRate === 0) {
+      maturity = amount;
+      interest = 0;
+      apy = 0;
+    } else {
+      maturity = amount * Math.pow(1 + r / freq, freq * years);
+      interest = maturity - totalDeposit;
+      apy = (Math.pow(1 + r / freq, freq) - 1) * 100;
+    }
+  } else {
+    const totalMonths = Math.round(years * 12);
+    totalDeposit = amount * totalMonths;
+    if (annualRate === 0) {
+      maturity = totalDeposit;
+      interest = 0;
+      apy = 0;
+    } else {
+      const im = Math.pow(1 + r / freq, freq / 12) - 1;
+      maturity = amount * (1 + im) * ((Math.pow(1 + im, totalMonths) - 1) / im);
+      interest = maturity - totalDeposit;
+      apy = (Math.pow(1 + r / freq, freq) - 1) * 100;
+    }
+  }
+
+  const growthPct = totalDeposit > 0 ? (interest / totalDeposit) * 100 : 0;
+
+  if (ciMaturityEl) ciMaturityEl.textContent = formatCurrency(maturity);
+  if (ciPrincipalEl) ciPrincipalEl.textContent = formatCurrency(totalDeposit);
+  if (ciInterestEl) ciInterestEl.textContent = formatCurrency(interest);
+  if (ciApyEl) ciApyEl.textContent = (isFinite(apy) ? apy.toFixed(2) : "0.00") + "%";
+  if (ciGrowthEl) {
+    const sign = growthPct >= 0 ? "+" : "";
+    ciGrowthEl.textContent = sign + (isFinite(growthPct) ? growthPct.toFixed(2) : "0.00") + "%";
+  }
+}
+
+if (ciTypeFdBtn) {
+  ciTypeFdBtn.addEventListener("click", () => {
+    ciDepositType = "fd";
+    ciTypeFdBtn.classList.add("active");
+    ciTypeRdBtn?.classList.remove("active");
+    if (ciAmountLabel) ciAmountLabel.textContent = "Total Deposit Amount";
+    if (ciDepositLabelEl) ciDepositLabelEl.textContent = "Total Principal";
+    if (ciPrincipalInput && (ciPrincipalInput.value === "5000" || ciPrincipalInput.value === "1000")) {
+      ciPrincipalInput.value = "100000";
+    }
+    calculateCompoundInterest();
+  });
+}
+
+if (ciTypeRdBtn) {
+  ciTypeRdBtn.addEventListener("click", () => {
+    ciDepositType = "rd";
+    ciTypeRdBtn.classList.add("active");
+    ciTypeFdBtn?.classList.remove("active");
+    if (ciAmountLabel) ciAmountLabel.textContent = "Monthly Installment";
+    if (ciDepositLabelEl) ciDepositLabelEl.textContent = "Total Invested";
+    if (ciPrincipalInput && ciPrincipalInput.value === "100000") {
+      ciPrincipalInput.value = "5000";
+    }
+    calculateCompoundInterest();
+  });
+}
+
+ciRateChips.forEach((chip) => {
+  chip.addEventListener("click", () => {
+    ciRateChips.forEach((c) => c.classList.remove("active"));
+    chip.classList.add("active");
+    if (ciRateInput) ciRateInput.value = chip.dataset.rate;
+    calculateCompoundInterest();
+  });
+});
+
+if (ciRateInput) {
+  ciRateInput.addEventListener("input", () => {
+    ciRateChips.forEach((chip) => {
+      chip.classList.toggle("active", parseFloat(chip.dataset.rate) === parseFloat(ciRateInput.value));
+    });
+    calculateCompoundInterest();
+  });
+}
+
+ciFreqBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    ciFreqBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    ciCompoundingFreq = parseInt(btn.dataset.freq, 10) || 4;
+    calculateCompoundInterest();
+  });
+});
+
+if (ciCalcBtn) ciCalcBtn.addEventListener("click", calculateCompoundInterest);
+[ciPrincipalInput, ciTenureInput].forEach((input) => {
+  input?.addEventListener("input", calculateCompoundInterest);
+});
+
+calculateCompoundInterest();
+
+// 4. GST Calculation
 const gstAmountInput = document.querySelector("#gst-amount");
 const gstCustomRateInput = document.querySelector("#gst-custom-rate");
 const gstSlabBtns = document.querySelectorAll(".gst-slab-btn");
