@@ -575,6 +575,7 @@
             <button type="button" class="conv-cat-btn" data-cat="data">Data</button>
             <button type="button" class="conv-cat-btn" data-cat="speed">Speed</button>
             <button type="button" class="conv-cat-btn" data-cat="volume">Volume</button>
+            <button type="button" class="conv-cat-btn" data-cat="currency">Currency</button>
           </div>
 
           <!-- Converter Card -->
@@ -610,6 +611,18 @@
             <div class="conv-formula-card">
               <span class="conv-formula-label">Formula / Rate</span>
               <span id="conv-formula-val" class="conv-formula-text">1 Meter = 3.28084 Feet</span>
+            </div>
+
+            <!-- Currency Baseline Rates Panel (Visible only when Currency category is active) -->
+            <div id="conv-currency-rates-card" class="conv-currency-rates-card" style="display: none;">
+              <div class="conv-rates-header">
+                <div class="conv-rates-title-wrap">
+                  <span class="conv-rates-title">Baseline Exchange Rates (Base: 1 USD)</span>
+                  <span class="conv-rates-sub">User-adjustable rates stored locally</span>
+                </div>
+                <button type="button" id="conv-rates-reset-btn" class="conv-rates-reset-btn" title="Reset to default exchange rates">Reset Rates</button>
+              </div>
+              <div class="conv-rates-grid" id="conv-rates-grid"></div>
             </div>
           </div>
         </div>
