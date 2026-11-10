@@ -327,7 +327,8 @@
           <!-- Sub-tool Tabs -->
           <div class="fin-tabs">
             <button type="button" class="fin-tab-btn active" data-subtab="emi">Loan / EMI</button>
-            <button type="button" class="fin-tab-btn" data-subtab="sip">SIP / Interest</button>
+            <button type="button" class="fin-tab-btn" data-subtab="sip">SIP Return</button>
+            <button type="button" class="fin-tab-btn" data-subtab="compound">Compound (FD/RD)</button>
             <button type="button" class="fin-tab-btn" data-subtab="gst">GST Tax</button>
           </div>
 
@@ -433,7 +434,87 @@
             </div>
           </div>
 
-          <!-- Sub-tool 3: GST / Tax Calculator -->
+          <!-- Sub-tool 3: Compound Interest (FD / RD) Calculator -->
+          <div id="fin-subtab-compound" class="fin-subtab-panel">
+            <div class="fin-inputs-col">
+              <!-- Type Toggle: FD (Lump Sum) vs RD (Monthly) -->
+              <div class="ci-type-toggle">
+                <button type="button" id="ci-type-fd" class="ci-type-btn active" data-type="fd">Fixed Deposit (FD)</button>
+                <button type="button" id="ci-type-rd" class="ci-type-btn" data-type="rd">Recurring Deposit (RD)</button>
+              </div>
+
+              <div class="fin-input-group">
+                <label id="ci-amount-label" for="ci-principal">Total Deposit Amount</label>
+                <div class="fin-input-wrap">
+                  <span class="fin-prefix">₹</span>
+                  <input type="number" id="ci-principal" placeholder="100000" value="100000" min="0" />
+                </div>
+              </div>
+
+              <div class="fin-input-group">
+                <label for="ci-rate">Annual Interest Rate (%)</label>
+                <div class="fin-input-wrap">
+                  <input type="number" id="ci-rate" placeholder="7.5" value="7.5" step="0.1" min="0" />
+                  <span class="fin-suffix">%</span>
+                </div>
+                <div class="ci-rate-chips">
+                  <button type="button" class="ci-chip-btn" data-rate="6">6%</button>
+                  <button type="button" class="ci-chip-btn" data-rate="7">7%</button>
+                  <button type="button" class="ci-chip-btn active" data-rate="7.5">7.5%</button>
+                  <button type="button" class="ci-chip-btn" data-rate="8">8%</button>
+                  <button type="button" class="ci-chip-btn" data-rate="9">9%</button>
+                </div>
+              </div>
+
+              <div class="fin-input-group">
+                <label for="ci-tenure">Time Period (Years)</label>
+                <div class="fin-input-wrap">
+                  <input type="number" id="ci-tenure" placeholder="5" value="5" min="0.1" max="50" step="0.5" />
+                  <span class="fin-suffix">Yrs</span>
+                </div>
+              </div>
+
+              <div class="fin-input-group">
+                <label>Compounding Frequency</label>
+                <div class="ci-freq-grid">
+                  <button type="button" class="ci-freq-btn" data-freq="12">Monthly</button>
+                  <button type="button" class="ci-freq-btn active" data-freq="4">Quarterly</button>
+                  <button type="button" class="ci-freq-btn" data-freq="2">Semi-Annual</button>
+                  <button type="button" class="ci-freq-btn" data-freq="1">Annual</button>
+                </div>
+              </div>
+
+              <button type="button" id="ci-calc-btn" class="fin-submit-btn">Calculate Compound Value</button>
+            </div>
+
+            <div class="fin-results-col">
+              <!-- Results Card -->
+              <div class="fin-results-card">
+                <div class="fin-stat-item highlight">
+                  <span class="fin-stat-label">Total Maturity Value</span>
+                  <span id="ci-res-maturity" class="fin-stat-val">₹1,44,994.80</span>
+                </div>
+                <div class="fin-stat-item">
+                  <span id="ci-res-deposit-label" class="fin-stat-label">Total Principal</span>
+                  <span id="ci-res-principal" class="fin-stat-val">₹1,00,000.00</span>
+                </div>
+                <div class="fin-stat-item">
+                  <span class="fin-stat-label">Compound Interest</span>
+                  <span id="ci-res-interest" class="fin-stat-val">₹44,994.80</span>
+                </div>
+                <div class="fin-stat-item">
+                  <span class="fin-stat-label">Effective Yield (APY)</span>
+                  <span id="ci-res-apy" class="fin-stat-val">7.71%</span>
+                </div>
+                <div class="fin-stat-item total">
+                  <span class="fin-stat-label">Total Growth</span>
+                  <span id="ci-res-growth" class="fin-stat-val">+44.99%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tool 4: GST / Tax Calculator -->
           <div id="fin-subtab-gst" class="fin-subtab-panel">
             <div class="fin-inputs-col">
               <div class="fin-input-group">
