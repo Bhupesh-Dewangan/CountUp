@@ -1177,6 +1177,116 @@ button.pressed {
   color: var(--display-text);
 }
 
+/* Currency Converter Baseline Rates Panel */
+.conv-currency-rates-card {
+  width: 100%;
+  background: var(--display-bg);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.8rem;
+  border: 1px solid var(--toggle-bg);
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.conv-rates-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.conv-rates-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.conv-rates-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--display-text);
+  letter-spacing: 0.02em;
+}
+
+.conv-rates-sub {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--sub-display-text);
+}
+
+.conv-rates-reset-btn {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--btn-bg);
+  color: var(--brand-color);
+  border: 1px solid var(--toggle-bg);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.conv-rates-reset-btn:hover {
+  background: var(--btn-hover);
+  border-color: var(--brand-color);
+}
+
+.conv-rates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.5rem;
+}
+
+.conv-rate-item {
+  display: flex;
+  align-items: center;
+  background: var(--body-bg);
+  border-radius: 8px;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--toggle-bg);
+  transition: border-color 0.2s ease;
+}
+
+.conv-rate-item:focus-within {
+  border-color: var(--operator-bg);
+}
+
+.conv-rate-tag {
+  display: flex;
+  flex-direction: column;
+  min-width: 44px;
+}
+
+.conv-rate-code {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--display-text);
+}
+
+.conv-rate-sym {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--sub-display-text);
+}
+
+.conv-rate-input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  text-align: right;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--display-text);
+  font-family: inherit;
+}
+
 /* Date & Age Calculator Styles */
 .date-tabs {
   width: 100%;
